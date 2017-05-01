@@ -6,21 +6,21 @@ import static jp.alhinc.kadono_setsu.bbs_system.utils.DBUtil.*;
 import java.sql.Connection;
 import java.util.List;
 
-import jp.alhinc.kadono_setsu.bbs_system.beans.Message;
+import jp.alhinc.kadono_setsu.bbs_system.beans.Post;
 import jp.alhinc.kadono_setsu.bbs_system.beans.UserMessage;
-import jp.alhinc.kadono_setsu.bbs_system.dao.MessageDao;
+import jp.alhinc.kadono_setsu.bbs_system.dao.PostDao;
 import jp.alhinc.kadono_setsu.bbs_system.dao.UserMessageDao;
 
-public class MessageService {
+public class PostService {
 
-	public void register(Message message) {
+	public void register(Post post) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			MessageDao messageDao = new MessageDao();
-			messageDao.insert(connection, message);
+			PostDao postDao = new PostDao();
+			postDao.insert(connection, post);
 
 			commit(connection);
 		} catch (RuntimeException e) {

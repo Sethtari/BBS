@@ -25,29 +25,28 @@ public class ManagementServlet extends HttpServlet {
 		List<User> users = new UserService().getUserList();
 		session.setAttribute("users", users);
 
-		request.getRequestDispatcher("/management.jsp").forward(request, response);
+		request.getRequestDispatcher("management.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
 		User user = new User();
-		String check = request.getParameter("isStopButton");
-		int isStoppedCheck = Integer.parseInt(check.substring(check.length() - 1));
-		int idCheck = Integer.parseInt(check.substring(0, check.length() - 1));
+		int id = Integer.parseInt(request.getParameter("isStopButton"));
+		int isStopped = Integer.parseInt(request.getParameter("hidden"));
 
-		if(isStoppedCheck == 1){
-			user.setID(idCheck);
+		if(isStopped == 1){
+			user.setID(id);
 			user.setIsStopped(1);
 		};
 
-		if(isStoppedCheck == 0){
-			user.setID(idCheck);
+		if(isStopped == 0){
+			user.setID(id);
 			user.setIsStopped(0);
 		}
 
 		new UserService().changeStoppedOrNot(user);
 
-		response.sendRedirect("./management");
+		response.sendRedirect("management");
 	}
 }

@@ -19,26 +19,40 @@
 		</div>
 
 		<div class="userList">
-		<table border ="2">
-					<tr>
+			<table border="2">
+				<tr>
 					<td>ID</td>
 					<td>ログインID</td>
 					<td>名称</td>
 					<td>支店</td>
 					<td>部署・役職</td>
-					<td>ユーザー</td>
-					</tr>
-			<c:forEach items="${users}" var="user">
+					<td colspan="3">ユーザー</td>
+				</tr>
+				<c:forEach items="${users}" var="user">
 					<tr>
-					<td><c:out value="${user.ID}" /></td>
-					<td><c:out value="${user.loginID}" /></td>
-					<td><c:out value="${user.name}" /></td>
-					<td><c:out value="${user.branchID}" /></td>
-					<td><c:out value="${user.positionID}" /></td>
-					<td><form action="./management" method="post">
-				<c:if test="${user.isStopped == '0'}"><button type="submit" name="isStopButton" value="${user.ID}1" >停止</button></c:if><c:if test="${user.isStopped == '1'}"><button type="submit" name="isStopButton" value="${user.ID}0" >復活</button></c:if></form><form action="./management" method="post"></form></td>
+						<td><c:out value="${user.ID}" /></td>
+						<td><c:out value="${user.loginID}" /></td>
+						<td><c:out value="${user.name}" /></td>
+						<td><c:out value="${user.branchID}" /></td>
+						<td><c:out value="${user.positionID}" /></td>
+						<td><form action="management" method="post">
+								<c:if test="${user.isStopped == '0'}">
+									<input type="hidden" name="hidden" value="1" /><button type="submit" name="isStopButton" value="${user.ID}">停止</button>
+								</c:if>
+								<c:if test="${user.isStopped == '1'}">
+									<input type="hidden" name="hidden" value="0" /><button type="submit" name="isStopButton" value="${user.ID}">復活</button>
+								</c:if></form></td>
+
+						<td><form action="settings" method="get">
+								<button type="submit" name="settingsButton" value="${user.ID}">編集</button>
+							</form></td>
+
+						<td><form action="management" method="post">
+								<button type="submit" name="deleteButton" value="${user.ID}">削除</button>
+							</form></td>
 					</tr>
-			</c:forEach></table>
+				</c:forEach>
+			</table>
 		</div>
 	</div>
 </body>

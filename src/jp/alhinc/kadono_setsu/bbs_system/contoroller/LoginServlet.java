@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
 import jp.alhinc.kadono_setsu.bbs_system.service.LoginService;
 
-@WebServlet(urlPatterns = { "/login" })
+@WebServlet(urlPatterns = { "/index.jsp" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -13,7 +13,7 @@
 	<div class="main-contents">
 
 		<div class="header">
-			<a href="post">新規投稿</a> <a href="management">ユーザー管理</a> <a href="logout">ログアウト</a>
+			<a href="newPost">新規投稿</a> <a href="management">ユーザー管理</a> <a href="logout">ログアウト</a>
 		</div>
 
 		<div class="messages">

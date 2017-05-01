@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import jp.alhinc.kadono_setsu.bbs_system.exception.NoRowsUpdatedRuntimeException
 import jp.alhinc.kadono_setsu.bbs_system.service.UserService;
 
 @WebServlet(urlPatterns = { "/settings" })
-@MultipartConfig(maxFileSize = 100000)
 public class SettingsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -28,15 +26,14 @@ public class SettingsServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
-
-		if (session.getAttribute("editUser") == null) {
-			User editUser = new UserService().getUser(loginUser.getID());
-			session.setAttribute("editUser", editUser);
-		}
+		User editUser = new UserService().getUser(Integer.parseInt(request.getParameter("settingsButton")));
+		session.setAttribute("editUser", editUser);
 
 		request.getRequestDispatcher("settings.jsp").forward(request, response);
 	}
+
+
+
 
 	@Override
 	protected void doPost(HttpServletRequest request,
@@ -45,7 +42,6 @@ public class SettingsServlet extends HttpServlet {
 		List<String> messages = new ArrayList<String>();
 
 		HttpSession session = request.getSession();
-
 		User editUser = getEditUser(request);
 		session.setAttribute("editUser", editUser);
 
@@ -58,15 +54,16 @@ public class SettingsServlet extends HttpServlet {
 				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
 				session.setAttribute("errorMessages", messages);
 				response.sendRedirect("settings");
+			} catch(Exception e) {
+				return;
 			}
-
 			session.setAttribute("loginUser", editUser);
 			session.removeAttribute("editUser");
 
-			response.sendRedirect("./");
+			response.sendRedirect("management");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("settings");
+			request.getRequestDispatcher("settings.jsp").forward(request, response);
 		}
 	}
 
@@ -76,46 +73,56 @@ public class SettingsServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User editUser = (User) session.getAttribute("editUser");
 
-		editUser.setLoginID(request.getParameter("login_id"));
-		editUser.setPassword(request.getParameter("password"));
-		editUser.setName(request.getParameter("name"));
-		editUser.setBranchID(request.getParameter("branch_id"));
-		editUser.setPositionID(request.getParameter("position_id"));
+		if(!StringUtils.isEmpty(request.getParameter("login_id"))){
+			editUser.setLoginID(request.getParameter("login_id"));
+		}
+
+		if(!StringUtils.isEmpty(request.getParameter("password"))){
+			editUser.setPassword(request.getParameter("password"));
+		}
+
+		if(!StringUtils.isEmpty(request.getParameter("name"))){
+			editUser.setName(request.getParameter("name"));
+		}
+
+		if(!StringUtils.isEmpty(request.getParameter("branch_id"))){
+			editUser.setBranchID(request.getParameter("branch_id"));
+		}
+
+		if(!StringUtils.isEmpty(request.getParameter("position_id"))){
+			editUser.setPositionID(request.getParameter("position_id"));
+		}
+
 		return editUser;
 	}
 
-	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String login_id = request.getParameter("login_id");
-		String password = request.getParameter("password");
-		String password_check = request.getParameter("password_check");
-		String name =request.getParameter("name");
-		String branch_id = request.getParameter("branch_id");
-		String position_id = request.getParameter("position_id");
+	private boolean isValid(HttpServletRequest request, List<String> messages)
+			throws IOException, ServletException {
 
-		if (StringUtils.isEmpty(login_id) == true || StringUtils.isEmpty(password) == true || StringUtils.isEmpty(name) == true || StringUtils.isEmpty(branch_id) == true || StringUtils.isEmpty(position_id) == true) {
-			messages.add("空白の項目があります。全項目を入力してください");
-		}
+		HttpSession session = request.getSession();
+		User editUser = (User) session.getAttribute("editUser");
 
-		if (!(6 <= login_id.length()) || !(login_id.length() <= 20)){
+
+		if (!(6 <= editUser.getLoginID().length()) || !(editUser.getLoginID().length() <= 20)){
 			messages.add("ログイン_idの文字数が規定と異なります");
 		}
 
-		if (!(6 <= password.length()) || !(password.length() <= 255)){
+		if (!(6 <= editUser.getPassword().length()) || !(editUser.getPassword().length() <= 255)){
 			messages.add("パスワードの文字数が規定と異なります");
 		}
-		if (!password.equals(password_check)){
+		if (!StringUtils.isEmpty(request.getParameter("PasswordCheck")) && !editUser.getPassword().equals(request.getParameter("password_check"))){
 			messages.add("入力されたパスワードが一致しません");
 		}
 
-		if (!(name.length() <= 10)){
+		if (!(editUser.getName().length() <= 10)){
 			messages.add("ユーザー名称の文字数が規定と異なります");
 		}
 
-		if (!(branch_id.matches("^[0-9]+$"))){
+		if (!(editUser.getBranchID().matches("^[0-9]+$"))){
 			messages.add("支店の項目に数字以外が入力されています");
 		}
 
-		if (!(position_id.matches("^[0-9]+$"))){
+		if (!(editUser.getPositionID().matches("^[0-9]+$"))){
 			messages.add("部署・役職の項目に数字以外が入力されています");
 		}
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要

@@ -13,13 +13,20 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
-import jp.alhinc.kadono_setsu.bbs_system.beans.Message;
+import jp.alhinc.kadono_setsu.bbs_system.beans.Post;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
-import jp.alhinc.kadono_setsu.bbs_system.service.MessageService;
+import jp.alhinc.kadono_setsu.bbs_system.service.PostService;
 
-@WebServlet(urlPatterns = { "/newMessage" })
+@WebServlet(urlPatterns = { "/newPost" })
 public class NewPostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+
+		request.getRequestDispatcher("newPost.jsp").forward(request, response);
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest request,
@@ -33,29 +40,57 @@ public class NewPostServlet extends HttpServlet {
 
 			User user = (User) session.getAttribute("loginUser");
 
-			Message message = new Message();
-			message.setText(request.getParameter("message"));
-			message.setUserId(user.getId());
+			Post post = new Post();
+			post.setUsersId(user.getID());
+			post.setTitle(request.getParameter("title"));
+			post.setText(request.getParameter("text"));
+			post.setCategory(request.getParameter("category"));
 
-			new MessageService().register(message);
 
-			response.sendRedirect("./");
+			new PostService().register(post);
+
+			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("./");
+			session.setAttribute("title",request.getParameter("title"));
+			session.setAttribute("text", request.getParameter("text"));
+			session.setAttribute("category", request.getParameter("category"));
+			request.getRequestDispatcher("newPost.jsp").forward(request, response);
 		}
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
-		String message = request.getParameter("message");
+		String titleCheck = request.getParameter("title");
+		String textCheck = request.getParameter("text");
+		String categoryCheck = request.getParameter("category");
 
-		if (StringUtils.isEmpty(message) == true) {
-			messages.add("メッセージを入力してください");
+
+		if (StringUtils.isEmpty(titleCheck) == true){
+			messages.add("件名を入力してください");
 		}
-		if (140 < message.length()) {
-			messages.add("140文字以下で入力してください");
+		if (titleCheck.length() > 50){
+			messages.add("件名が規定を"+(titleCheck.length()-50)+"字オーバーしています");
+			messages.add("件名は50文字以内で入力してください");
 		}
+
+		if (StringUtils.isEmpty(textCheck) == true) {
+			messages.add("本文を入力してください");
+		}
+		if (textCheck.length() > 1000){
+			messages.add("本文が規定を"+(textCheck.length()-1000)+"字オーバーしています");
+			messages.add("本文は1000文字以内で入力してください");
+		}
+
+		if (StringUtils.isEmpty(categoryCheck) == true){
+			messages.add("カテゴリーを入力してください");
+		}
+		if (categoryCheck.length() > 10){
+			messages.add("カテゴリーが規定を"+(categoryCheck.length()-10)+"字オーバーしています");
+			messages.add("カテゴリーは10文字以内で入力してください");
+		}
+
+
 		if (messages.size() == 0) {
 			return true;
 		} else {

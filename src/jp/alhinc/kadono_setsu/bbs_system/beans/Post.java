@@ -3,11 +3,11 @@ package jp.alhinc.kadono_setsu.bbs_system.beans;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Message implements Serializable {
+public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	private int login_id;
+	private int users_id;
 	private String title;
 	private String text;
 	private String category;
@@ -21,12 +21,12 @@ public class Message implements Serializable {
 		this.id = id;
 	}
 
-	public int getLoginId() {
-		return login_id;
+	public int getUsersId() {
+		return users_id;
 	}
 
-	public void setLoginId(int login_id) {
-		this.login_id = login_id;
+	public void setUsersId(int users_Id) {
+		this.users_id = users_Id;
 	}
 
 	public String getTitle() {

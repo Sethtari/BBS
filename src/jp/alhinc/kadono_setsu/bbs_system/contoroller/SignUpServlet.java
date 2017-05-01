@@ -94,7 +94,7 @@ public class SignUpServlet extends HttpServlet {
 		if (!(position_id.matches("^[0-9]+$"))){
 			messages.add("部署・役職の項目に数字以外が入力されています");
 		}
-		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
+		// TODO アカウントが既に利用されていないかの確認も必要
 		if (messages.size() == 0) {
 			return true;
 		} else {
