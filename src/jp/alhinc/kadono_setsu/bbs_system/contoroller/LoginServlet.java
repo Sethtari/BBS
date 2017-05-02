@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
 import jp.alhinc.kadono_setsu.bbs_system.service.LoginService;
 
-@WebServlet(urlPatterns = { "/index.jsp" })
+@WebServlet(urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,17 +29,17 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		String loginID = request.getParameter("login_id");
+		String loginId = request.getParameter("login_id");
 		String password = request.getParameter("password");
 
 		LoginService loginService = new LoginService();
-		User user = loginService.login(loginID, password);
+		User user = loginService.login(loginId, password);
 
 		HttpSession session = request.getSession();
 		if (user != null) {
 
 			session.setAttribute("loginUser", user);
-			response.sendRedirect("./home");
+			response.sendRedirect("./");
 		} else {
 
 			List<String> messages = new ArrayList<String>();

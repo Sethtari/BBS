@@ -7,27 +7,27 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	private String login_id;
+	private String loginId;
 	private String password;
 	private String name;
-	private String branch_id;
-	private String position_id;
-	private Integer is_stopped;
+	private String branchId;
+	private String positionId;
+	private Integer isStopped;
 
-	public int getID() {
+	public int getId() {
 		return id;
 	}
 
-	public void setID(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getLoginID() {
-		return login_id;
+	public String getLoginId() {
+		return loginId;
 	}
 
-	public void setLoginID(String login_ID) {
-		this.login_id = login_ID;
+	public void setLoginID(String loginId) {
+		this.loginId = loginId;
 	}
 
 
@@ -47,27 +47,27 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getBranchID() {
-		return branch_id;
+	public String getBranchId() {
+		return branchId;
 	}
 
-	public void setBranchID(String branch_id) {
-		this.branch_id = branch_id;
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
 	}
 
-	public String getPositionID() {
-		return position_id;
+	public String getPositionId() {
+		return positionId;
 	}
 
-	public void setPositionID(String position_id) {
-		this.position_id = position_id;
+	public void setPositionId(String positionId) {
+		this.positionId = positionId;
 	}
 
 	public Integer getIsStopped() {
-		return is_stopped;
+		return isStopped;
 	}
 
-	public void setIsStopped(int is_Stopped) {
-		this.is_stopped = is_Stopped;
+	public void setIsStopped(int isStopped) {
+		this.isStopped = isStopped;
 	}
 }

@@ -56,12 +56,12 @@ public class UserDao {
 				Integer is_stopped = rs.getInt("is_stopped");
 
 				User user = new User();
-				user.setID(id);
+				user.setId(id);
 				user.setLoginID(login_id);
 				user.setPassword(password);
 				user.setName(name);
-				user.setBranchID(branch_id);
-				user.setPositionID(position_id);
+				user.setBranchId(branch_id);
+				user.setPositionId(position_id);
 				user.setIsStopped(is_stopped);
 
 				ret.add(user);
@@ -94,11 +94,11 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, user.getLoginID());
+			ps.setString(1, user.getLoginId());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getName());
-			ps.setString(4, user.getBranchID());
-			ps.setString(5, user.getPositionID());
+			ps.setString(4, user.getBranchId());
+			ps.setString(5, user.getPositionId());
 
 
 
@@ -126,13 +126,13 @@ public class UserDao {
 			sql.append(" id = ? ;");
 
 			ps = connection.prepareStatement(sql.toString());
-			ps.setString(1, user.getLoginID());
+			ps.setString(1, user.getLoginId());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getName());
-			ps.setString(4, user.getBranchID());
-			ps.setString(5, user.getPositionID());
+			ps.setString(4, user.getBranchId());
+			ps.setString(5, user.getPositionId());
 			ps.setInt(6, user.getIsStopped());
-			ps.setInt(7, user.getID());
+			ps.setInt(7, user.getId());
 
 			int count = ps.executeUpdate();
 			if (count == 0) {
@@ -199,7 +199,7 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 			ps.setInt(1, user.getIsStopped());
-			ps.setInt(2, user.getID());
+			ps.setInt(2, user.getId());
 
 			int count = ps.executeUpdate();
 			if (count == 0) {
@@ -211,7 +211,7 @@ public class UserDao {
 			close(ps);
 		}
 	}
-	public void deleteUser(Connection connection, int id) {
+	public void deleteUser(Connection connection, User user) {
 
 		PreparedStatement ps = null;
 		try {
@@ -219,7 +219,8 @@ public class UserDao {
 			sql.append("DELETE FROM users WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
-			ps.setInt(1, id);
+			ps.setInt(1, user.getId());
+System.out.println(user.getId());
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {

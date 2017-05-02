@@ -14,7 +14,7 @@
 	<div class="main-contents">
 
 		<div class="header">
-			<a href="./home">ホーム画面へ</a> <a href="signup">ユーザーの新規登録画面へ</a>
+			<a href="./">ホーム画面へ</a> <a href="signup">ユーザーの新規登録画面へ</a>
 
 		</div>
 
@@ -30,25 +30,25 @@
 				</tr>
 				<c:forEach items="${users}" var="user">
 					<tr>
-						<td><c:out value="${user.ID}" /></td>
-						<td><c:out value="${user.loginID}" /></td>
+						<td><c:out value="${user.id}" /></td>
+						<td><c:out value="${user.loginId}" /></td>
 						<td><c:out value="${user.name}" /></td>
-						<td><c:out value="${user.branchID}" /></td>
-						<td><c:out value="${user.positionID}" /></td>
+						<td><c:out value="${user.branchId}" /></td>
+						<td><c:out value="${user.positionId}" /></td>
 						<td><form action="management" method="post">
 								<c:if test="${user.isStopped == '0'}">
-									<input type="hidden" name="hidden" value="1" /><button type="submit" name="isStopButton" value="${user.ID}">停止</button>
+									<input type="hidden" name="isStopped" value="1" /><button type="submit" name="id" value="${user.id}">停止</button>
 								</c:if>
 								<c:if test="${user.isStopped == '1'}">
-									<input type="hidden" name="hidden" value="0" /><button type="submit" name="isStopButton" value="${user.ID}">復活</button>
+									<input type="hidden" name="isStopped" value="0" /><button type="submit" name="id" value="${user.id}">復活</button>
 								</c:if></form></td>
 
 						<td><form action="settings" method="get">
-								<button type="submit" name="settingsButton" value="${user.ID}">編集</button>
+								<button type="submit" name="settingsButton" value="${user.id}">編集</button>
 							</form></td>
 
-						<td><form action="management" method="post">
-								<button type="submit" name="deleteButton" value="${user.ID}">削除</button>
+						<td><form action="deleteuser" method="get">
+								<input type="hidden" name="deleteId" value="${user.id}" /><button type="submit" name="deleteButton">削除</button>
 							</form></td>
 					</tr>
 				</c:forEach>

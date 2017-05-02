@@ -32,16 +32,16 @@ public class ManagementServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		User user = new User();
-		int id = Integer.parseInt(request.getParameter("isStopButton"));
-		int isStopped = Integer.parseInt(request.getParameter("hidden"));
+		int id = Integer.parseInt(request.getParameter("id"));
+		int isStopped = Integer.parseInt(request.getParameter("isStopped"));
 
 		if(isStopped == 1){
-			user.setID(id);
+			user.setId(id);
 			user.setIsStopped(1);
 		};
 
 		if(isStopped == 0){
-			user.setID(id);
+			user.setId(id);
 			user.setIsStopped(0);
 		}
 

@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>${editUser.loginID}の設定</title>
+	<title>${editUser.loginId}の設定</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -26,7 +26,7 @@
 
 <form action="settings" method="post"><br />
 	<label for="login_id">ログインID</label>
-	<input name="login_id" value="${editUser.loginID}" ID="login_id"/>名前はあなたの公開プロフィールに表示されます）<br />
+	<input name="login_id" value="${editUser.loginId}" ID="login_id"/><br />
 
 	<label for="password">パスワード</label>
 	<input name="password" type="password" /> <br />
@@ -38,10 +38,10 @@
 	<input name="name" value="${editUser.name}" ID="name"/><br />
 
 	<label for="branch_id">支店</label>
-	<input name="branch_id" value="${editUser.branchID}" ID="branch_id"/><br />
+	<input name="branch_id" value="${editUser.branchId}" ID="branch_id"/><br />
 
 	<label for="position_id">部署・役職</label>
-	<input name="position_id" value="${editUser.positionID}" ID="position_id" /><br />
+	<input name="position_id" value="${editUser.positionId}" ID="position_id" /><br />
 
 	<input type="submit" value="登録" /> <br />
 	<a href="management">戻る</a>

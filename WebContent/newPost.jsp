@@ -26,7 +26,7 @@
 
 		<div class="form-area">
 
-			<form action="newPost" method="post">
+			<form action="newpost" method="post">
 				件名（50文字以内で入力してください）
 				<input name="title" value="${title}"><c:remove var="title" scope="session" /><br />
 				<br/>
@@ -36,7 +36,7 @@
 			<c:remove var="text" scope="session" />
 				カテゴリー（10文字以内で入力してください）
 				<input name="category" value="${category}"><c:remove var="category" scope="session" />
-				<br /> <input type="submit" value="新規投稿">
+				<br /> <input type="hidden" name="loginId" value="${loginUser.getName()}" /><input type="submit" value="新規投稿">
 			</form>
 
 		</div>

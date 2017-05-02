@@ -53,7 +53,7 @@ public class SettingsServlet extends HttpServlet {
 				session.removeAttribute("editUser");
 				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
 				session.setAttribute("errorMessages", messages);
-				response.sendRedirect("settings");
+				request.getRequestDispatcher("settings.jsp").forward(request, response);
 			} catch(Exception e) {
 				return;
 			}
@@ -86,11 +86,11 @@ public class SettingsServlet extends HttpServlet {
 		}
 
 		if(!StringUtils.isEmpty(request.getParameter("branch_id"))){
-			editUser.setBranchID(request.getParameter("branch_id"));
+			editUser.setBranchId(request.getParameter("branch_id"));
 		}
 
 		if(!StringUtils.isEmpty(request.getParameter("position_id"))){
-			editUser.setPositionID(request.getParameter("position_id"));
+			editUser.setPositionId(request.getParameter("position_id"));
 		}
 
 		return editUser;
@@ -103,7 +103,7 @@ public class SettingsServlet extends HttpServlet {
 		User editUser = (User) session.getAttribute("editUser");
 
 
-		if (!(6 <= editUser.getLoginID().length()) || !(editUser.getLoginID().length() <= 20)){
+		if (!(6 <= editUser.getLoginId().length()) || !(editUser.getLoginId().length() <= 20)){
 			messages.add("ログイン_idの文字数が規定と異なります");
 		}
 
@@ -118,11 +118,11 @@ public class SettingsServlet extends HttpServlet {
 			messages.add("ユーザー名称の文字数が規定と異なります");
 		}
 
-		if (!(editUser.getBranchID().matches("^[0-9]+$"))){
+		if (!(editUser.getBranchId().matches("^[0-9]+$"))){
 			messages.add("支店の項目に数字以外が入力されています");
 		}
 
-		if (!(editUser.getPositionID().matches("^[0-9]+$"))){
+		if (!(editUser.getPositionId().matches("^[0-9]+$"))){
 			messages.add("部署・役職の項目に数字以外が入力されています");
 		}
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要

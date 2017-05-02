@@ -17,8 +17,8 @@ import jp.alhinc.kadono_setsu.bbs_system.beans.Post;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
 import jp.alhinc.kadono_setsu.bbs_system.service.PostService;
 
-@WebServlet(urlPatterns = { "/newpost" })
-public class NewPostServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/newcomment" })
+public class NewCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override

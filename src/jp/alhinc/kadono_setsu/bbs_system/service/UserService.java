@@ -131,14 +131,15 @@ public class UserService {
 		}
 	}
 
-	public void deleteUser(int id) {
+	public void deleteUser(User user) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
 			UserDao userDao = new UserDao();
-			userDao.deleteUser(connection, id);
+			
+			userDao.deleteUser(connection, user);
 
 			commit(connection);
 		} catch (RuntimeException e) {

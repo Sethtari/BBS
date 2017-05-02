@@ -7,9 +7,9 @@ import java.sql.Connection;
 import java.util.List;
 
 import jp.alhinc.kadono_setsu.bbs_system.beans.Post;
-import jp.alhinc.kadono_setsu.bbs_system.beans.UserMessage;
+import jp.alhinc.kadono_setsu.bbs_system.beans.UserPost;
 import jp.alhinc.kadono_setsu.bbs_system.dao.PostDao;
-import jp.alhinc.kadono_setsu.bbs_system.dao.UserMessageDao;
+import jp.alhinc.kadono_setsu.bbs_system.dao.UserPostDao;
 
 public class PostService {
 
@@ -34,20 +34,38 @@ public class PostService {
 		}
 	}
 
-	private static final int LIMIT_NUM = 1000;
-
-	public List<UserMessage> getMessage() {
+	public List<UserPost> getPostsList() {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			UserMessageDao messageDao = new UserMessageDao();
-			List<UserMessage> ret = messageDao.getUserMessages(connection, LIMIT_NUM);
+			UserPostDao postDao = new UserPostDao();
+			List<UserPost> ret = postDao.getUserPost(connection);
 
 			commit(connection);
-
 			return ret;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+	public void deletePost(Post post) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			PostDao postDao = new PostDao();
+			postDao.deletePost(connection, post);
+
+			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
