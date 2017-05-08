@@ -23,6 +23,7 @@ public class UserPostDao {
 
 			sql.append("SELECT ");
 			sql.append("posts.id,");
+			sql.append("users.id AS user_id, ");
 			sql.append("users.name,");
 			sql.append("users.branch_id,");
 			sql.append("users.position_id,");
@@ -63,6 +64,7 @@ public class UserPostDao {
 			while (rs.next()) {
 
 				int postsId = rs.getInt("id");
+				int usersId = rs.getInt("user_id");
 				String usersName = rs.getString("name");
 				String usersBranchId = rs.getString("branch_id");
 				String usersPositionId = rs.getString("position_id");
@@ -73,6 +75,7 @@ public class UserPostDao {
 
 				UserPost post = new UserPost();
 				post.setPostsId(postsId);
+				post.setUsersId(usersId);
 				post.setUsersName(usersName);
 				post.setUsersBranchId(usersBranchId);
 				post.setUsersPositionId(usersPositionId);

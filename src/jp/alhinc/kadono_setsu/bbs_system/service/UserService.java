@@ -43,7 +43,7 @@ public class UserService {
 		try {
 			connection = getConnection();
 
-			if((user.getPassword()) != null){
+			if(user.getPassCheck() == 0){
 			String encPassword = CipherUtil.encrypt(user.getPassword());
 			user.setPassword(encPassword);
 			}
@@ -138,7 +138,7 @@ public class UserService {
 			connection = getConnection();
 
 			UserDao userDao = new UserDao();
-			
+
 			userDao.deleteUser(connection, user);
 
 			commit(connection);

@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.alhinc.kadono_setsu.bbs_system.beans.Branch;
+import jp.alhinc.kadono_setsu.bbs_system.beans.Position;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
+import jp.alhinc.kadono_setsu.bbs_system.service.BranchService;
+import jp.alhinc.kadono_setsu.bbs_system.service.PositionService;
 import jp.alhinc.kadono_setsu.bbs_system.service.UserService;
 
 @WebServlet(urlPatterns = { "/management" })
@@ -24,6 +28,12 @@ public class ManagementServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		List<User> users = new UserService().getUserList();
 		session.setAttribute("users", users);
+
+		List<Branch> branches = new BranchService().getBranchList();
+		request.setAttribute("branches", branches);
+
+		List<Position> positions = new PositionService().getPositionList();
+		request.setAttribute("positions", positions);
 
 		request.getRequestDispatcher("management.jsp").forward(request, response);
 	}

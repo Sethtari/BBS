@@ -14,7 +14,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
+import jp.alhinc.kadono_setsu.bbs_system.beans.Branch;
+import jp.alhinc.kadono_setsu.bbs_system.beans.Position;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
+import jp.alhinc.kadono_setsu.bbs_system.service.BranchService;
+import jp.alhinc.kadono_setsu.bbs_system.service.PositionService;
 import jp.alhinc.kadono_setsu.bbs_system.service.UserService;
 
 @WebServlet(urlPatterns = { "/signup" })
@@ -25,6 +29,11 @@ public class SignUpServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		List<Branch> branches = new BranchService().getBranchList();
+		request.setAttribute("branches", branches);
+
+		List<Position> positions = new PositionService().getPositionList();
+		request.setAttribute("positions", positions);
 		request.getRequestDispatcher("signup.jsp").forward(request, response);
 	}
 
@@ -87,13 +96,6 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("ユーザー名称の文字数が規定と異なります");
 		}
 
-		if (!(branch_id.matches("^[0-9]+$"))){
-			messages.add("支店の項目に数字以外が入力されています");
-		}
-
-		if (!(position_id.matches("^[0-9]+$"))){
-			messages.add("部署・役職の項目に数字以外が入力されています");
-		}
 		// TODO アカウントが既に利用されていないかの確認も必要
 		if (messages.size() == 0) {
 			return true;

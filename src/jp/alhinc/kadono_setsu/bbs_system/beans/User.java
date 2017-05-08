@@ -13,6 +13,7 @@ public class User implements Serializable {
 	private String branchId;
 	private String positionId;
 	private Integer isStopped;
+	private Integer passCheck;
 
 	public int getId() {
 		return id;
@@ -69,5 +70,13 @@ public class User implements Serializable {
 
 	public void setIsStopped(int isStopped) {
 		this.isStopped = isStopped;
+	}
+
+	public Integer getPassCheck() {
+		return passCheck;
+	}
+
+	public void setPassCheck(int passCheck) {
+		this.passCheck = passCheck;
 	}
 }

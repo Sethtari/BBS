@@ -30,12 +30,29 @@
 			<input name="password_check" type="password" id="password_check" /><br />
 
 			<label for="name">名称</label> <input name="name" value="${name}"
-				id="name" />（名称は10文字以下で入力してください）<br /> <label for="branch_id">支店</label>
-			<input name="branch_id" value="${branch_id}" id="branch_id" />(支店番号を入力してください)<br />
+				id="name" />（名称は10文字以下で入力してください）<br />
 
-			<label for="position_id">部署・役職</label> <input name="position_id"
-				value="${position_id}" ID="position_id" /> <br /> <input
-				type="submit" value="登録" /> <br /> <a href="./management">戻る</a>
+			<label for="branch_id">支店</label>
+						<select name="branch_id">
+				<c:forEach items="${branches}" var="branch">
+						<option value="${branch.id}">
+							<c:out value="${branch.name}" />
+						</option>
+				</c:forEach>
+			</select><br />
+
+			<label for="position_id">部署・役職</label>
+
+						<select name="position_id">
+				<c:forEach items="${positions}" var="position">
+						<option value="${position.id}">
+							<c:out value="${position.name}" />
+						</option>
+				</c:forEach>
+			</select><br />
+
+			<input	type="submit" value="登録" /> <br /><br />
+			<a href="./management">戻る</a>
 		</form>
 	</div>
 </body>

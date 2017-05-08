@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.alhinc.kadono_setsu.bbs_system.beans.UserComment;
 import jp.alhinc.kadono_setsu.bbs_system.beans.UserPost;
+import jp.alhinc.kadono_setsu.bbs_system.service.CommentService;
 import jp.alhinc.kadono_setsu.bbs_system.service.PostService;
 
 @WebServlet(urlPatterns = { "/index.jsp" })
@@ -22,8 +24,11 @@ public class HomeServlet extends HttpServlet {
 
 
 		List<UserPost> userPosts = new PostService().getPostsList();
-
 		request.setAttribute("userPosts", userPosts);
+
+		List<UserComment> userComments = new CommentService().getCommentsList();
+		request.setAttribute("userComments", userComments);
+
 		request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 }

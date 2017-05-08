@@ -13,20 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
-import jp.alhinc.kadono_setsu.bbs_system.beans.Post;
+import jp.alhinc.kadono_setsu.bbs_system.beans.Comment;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
-import jp.alhinc.kadono_setsu.bbs_system.service.PostService;
+import jp.alhinc.kadono_setsu.bbs_system.service.CommentService;
 
 @WebServlet(urlPatterns = { "/newcomment" })
 public class NewCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-
-		request.getRequestDispatcher("newPost.jsp").forward(request, response);
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest request,
@@ -40,54 +33,37 @@ public class NewCommentServlet extends HttpServlet {
 
 			User user = (User) session.getAttribute("loginUser");
 
-			Post post = new Post();
-			post.setUsersId(user.getId());
-			post.setTitle(request.getParameter("title"));
-			post.setText(request.getParameter("text"));
-			post.setCategory(request.getParameter("category"));
+		String id = request.getParameter("comenttedPostId");
+		Comment comment = new Comment();
+		comment.setPostId(Integer.parseInt(id));
+		comment.setUserId(user.getId());
+		comment.setText(request.getParameter("text"));
 
 
-			new PostService().register(post);
+		new CommentService().register(comment);
 
-			response.sendRedirect("./");
+		response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			session.setAttribute("title",request.getParameter("title"));
-			session.setAttribute("text", request.getParameter("text"));
-			session.setAttribute("category", request.getParameter("category"));
-			request.getRequestDispatcher("newPost.jsp").forward(request, response);
+			session.setAttribute("texta", request.getParameter("text"));
+			response.sendRedirect("./");
 		}
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
-		String titleCheck = request.getParameter("title");
+
 		String textCheck = request.getParameter("text");
-		String categoryCheck = request.getParameter("category");
 
 
-		if (StringUtils.isEmpty(titleCheck) == true){
-			messages.add("件名を入力してください");
-		}
-		if (titleCheck.length() > 50){
-			messages.add("件名が規定を"+(titleCheck.length()-50)+"字オーバーしています");
-			messages.add("件名は50文字以内で入力してください");
-		}
+
 
 		if (StringUtils.isEmpty(textCheck) == true) {
 			messages.add("本文を入力してください");
 		}
-		if (textCheck.length() > 1000){
-			messages.add("本文が規定を"+(textCheck.length()-1000)+"字オーバーしています");
-			messages.add("本文は1000文字以内で入力してください");
-		}
-
-		if (StringUtils.isEmpty(categoryCheck) == true){
-			messages.add("カテゴリーを入力してください");
-		}
-		if (categoryCheck.length() > 10){
-			messages.add("カテゴリーが規定を"+(categoryCheck.length()-10)+"字オーバーしています");
-			messages.add("カテゴリーは10文字以内で入力してください");
+		if (textCheck.length() > 500){
+			messages.add("コメント文が規定を"+(textCheck.length()-500)+"字オーバーしています");
+			messages.add("コメントは500文字以内で入力してください");
 		}
 
 

@@ -8,22 +8,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.alhinc.kadono_setsu.bbs_system.beans.Post;
-import jp.alhinc.kadono_setsu.bbs_system.service.PostService;
+import jp.alhinc.kadono_setsu.bbs_system.beans.Comment;
+import jp.alhinc.kadono_setsu.bbs_system.service.CommentService;
 
-@WebServlet(urlPatterns = { "/deletepost" })
-public class DeletePostServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/deletecomment" })
+public class DeleteCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		int id = Integer.parseInt(request.getParameter("deletePostId"));
+		int id = Integer.parseInt(request.getParameter("deleteCommentId"));
 
-		Post post = new Post();
-		post.setId(id);
+		Comment comment = new Comment();
+		comment.setId(id);
 
-		new PostService().deletePost(post);
+		new CommentService().delete(comment);
 
 		response.sendRedirect("./");
 	}

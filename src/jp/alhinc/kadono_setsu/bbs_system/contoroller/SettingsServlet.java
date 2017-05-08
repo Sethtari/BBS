@@ -13,8 +13,12 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
+import jp.alhinc.kadono_setsu.bbs_system.beans.Branch;
+import jp.alhinc.kadono_setsu.bbs_system.beans.Position;
 import jp.alhinc.kadono_setsu.bbs_system.beans.User;
 import jp.alhinc.kadono_setsu.bbs_system.exception.NoRowsUpdatedRuntimeException;
+import jp.alhinc.kadono_setsu.bbs_system.service.BranchService;
+import jp.alhinc.kadono_setsu.bbs_system.service.PositionService;
 import jp.alhinc.kadono_setsu.bbs_system.service.UserService;
 
 @WebServlet(urlPatterns = { "/settings" })
@@ -28,6 +32,12 @@ public class SettingsServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User editUser = new UserService().getUser(Integer.parseInt(request.getParameter("settingsButton")));
 		session.setAttribute("editUser", editUser);
+
+		List<Branch> branches = new BranchService().getBranchList();
+		session.setAttribute("branches", branches);
+
+		List<Position> positions = new PositionService().getPositionList();
+		session.setAttribute("positions", positions);
 
 		request.getRequestDispatcher("settings.jsp").forward(request, response);
 	}
@@ -57,7 +67,7 @@ public class SettingsServlet extends HttpServlet {
 			} catch(Exception e) {
 				return;
 			}
-			session.setAttribute("loginUser", editUser);
+
 			session.removeAttribute("editUser");
 
 			response.sendRedirect("management");
@@ -93,6 +103,11 @@ public class SettingsServlet extends HttpServlet {
 			editUser.setPositionId(request.getParameter("position_id"));
 		}
 
+		if(StringUtils.isEmpty(request.getParameter("password"))){
+			editUser.setPassCheck(1);
+		}else{
+			editUser.setPassCheck(0);
+		}
 		return editUser;
 	}
 
@@ -110,7 +125,7 @@ public class SettingsServlet extends HttpServlet {
 		if (!(6 <= editUser.getPassword().length()) || !(editUser.getPassword().length() <= 255)){
 			messages.add("パスワードの文字数が規定と異なります");
 		}
-		if (!StringUtils.isEmpty(request.getParameter("PasswordCheck")) && !editUser.getPassword().equals(request.getParameter("password_check"))){
+		if (!StringUtils.isEmpty(request.getParameter("password")) && !editUser.getPassword().equals(request.getParameter("passwordCheck"))){
 			messages.add("入力されたパスワードが一致しません");
 		}
 

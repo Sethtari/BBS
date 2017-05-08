@@ -3,26 +3,25 @@ package jp.alhinc.kadono_setsu.bbs_system.beans;
 import java.io.Serializable;
 import java.util.Date;
 
-public class UserPost implements Serializable {
+public class UserComment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int postsId;
+	private int commentsId;
 	private int usersId;
+	private int postsId;
 	private String usersName;
 	private String usersBranchId;
 	private String usersPositionId;
-	private String postsTitle;
-	private String postsText;
-	private String postsCategory;
-	private Date postsCreatedAt;
+	private String commentsText;
+	private Date commentsCreatedAt;
 
 
-	public int getPostsId() {
-		return postsId;
+	public int getCommentsId() {
+		return commentsId;
 	}
 
-	public void setPostsId(int postsId) {
-		this.postsId = postsId;
+	public void setCommentsId(int commentsId) {
+		this.commentsId = commentsId;
 	}
 
 	public int getUsersId() {
@@ -31,6 +30,14 @@ public class UserPost implements Serializable {
 
 	public void setUsersId(int usersId) {
 		this.usersId = usersId;
+	}
+
+	public int getPostsId() {
+		return postsId;
+	}
+
+	public void setPostsId(int postsId) {
+		this.postsId = postsId;
 	}
 
 	public String getUsersName() {
@@ -57,38 +64,22 @@ public class UserPost implements Serializable {
 		this.usersPositionId = usersPositionId;
 	}
 
-	public String getPostsTitle() {
-		return postsTitle;
+
+	public String getCommentsText() {
+		return commentsText;
 	}
 
-	public void setPostsTitle(String postsTitle) {
-		this.postsTitle = postsTitle;
-	}
-
-
-	public String getPostsText() {
-		return postsText;
-	}
-
-	public void setPostsText(String postsText) {
-		this.postsText = postsText;
-	}
-
-	public String getPostsCategory() {
-		return postsCategory;
-	}
-
-	public void setPostsCategory(String postsCategory) {
-		this.postsCategory = postsCategory;
+	public void setCommentsText(String commentsText) {
+		this.commentsText = commentsText;
 	}
 
 
-	public Date getPostsCreatedAt() {
-		return postsCreatedAt;
+	public Date getCommentsCreatedAt() {
+		return commentsCreatedAt;
 	}
 
-	public void setPostsCreatedAt(Date postsCreatedAt) {
-		this.postsCreatedAt = postsCreatedAt;
+	public void setCommentsCreatedAt(Date commentsCreatedAt) {
+		this.commentsCreatedAt = commentsCreatedAt;
 	}
 
 }

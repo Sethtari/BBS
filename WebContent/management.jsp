@@ -33,8 +33,17 @@
 						<td><c:out value="${user.id}" /></td>
 						<td><c:out value="${user.loginId}" /></td>
 						<td><c:out value="${user.name}" /></td>
-						<td><c:out value="${user.branchId}" /></td>
-						<td><c:out value="${user.positionId}" /></td>
+						<td><c:forEach items="${branches}" var="branch">
+								<c:if test="${branch.id == user.branchId}">
+									<c:out value="${branch.name}" />
+						</c:if>
+						</c:forEach>
+						</td>
+						<td><c:forEach items="${positions}" var="position">
+								<c:if test="${position.id == user.positionId}">
+									<c:out value="${position.name}" />
+						</c:if>
+						</c:forEach></td>
 						<td><form action="management" method="post">
 								<c:if test="${user.isStopped == '0'}">
 									<input type="hidden" name="isStopped" value="1" /><button type="submit" name="id" value="${user.id}">停止</button>
@@ -47,9 +56,9 @@
 								<button type="submit" name="settingsButton" value="${user.id}">編集</button>
 							</form></td>
 
-						<td><form action="deleteuser" method="get">
+						<td><c:if test="${user.id != loginUser.getId()}"><form action="deleteuser" method="get">
 								<input type="hidden" name="deleteId" value="${user.id}" /><button type="submit" name="deleteButton">削除</button>
-							</form></td>
+							</form></c:if></td>
 					</tr>
 				</c:forEach>
 			</table>

@@ -47,6 +47,7 @@ public class UserDao {
 		List<User> ret = new ArrayList<User>();
 		try {
 			while (rs.next()) {
+
 				int id = rs.getInt("id");
 				String login_id = rs.getString("login_id");
 				String password = rs.getString("password");
@@ -175,8 +176,10 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
+
 			sql.append("SELECT * FROM users ");
 			sql.append("ORDER BY id ASC");
+
 
 			ps = connection.prepareStatement(sql.toString());
 
@@ -220,7 +223,8 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 			ps.setInt(1, user.getId());
-System.out.println(user.getId());
+			ps.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
