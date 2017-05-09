@@ -43,7 +43,9 @@ public class PostDao {
 			close(ps);
 		}
 	}
-	public void deletePost(Connection connection, Post post) {
+
+
+	public void delete(Connection connection, Post post) {
 
 		PreparedStatement ps = null;
 		try {

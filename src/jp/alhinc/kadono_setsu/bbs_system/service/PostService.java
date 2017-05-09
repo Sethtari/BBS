@@ -56,6 +56,52 @@ public class PostService {
 		}
 	}
 
+	public List<UserPost> getCategories() {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserPostDao postDao = new UserPostDao();
+			List<UserPost> ret = postDao.getCategories(connection);
+
+			commit(connection);
+			return ret;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
+	public List<UserPost> getCategorizedList(String category) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserPostDao postDao = new UserPostDao();
+
+			List<UserPost> ret = postDao.categorize(connection, category);
+
+			commit(connection);
+			return ret;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
 	public void deletePost(Post post) {
 
 		Connection connection = null;
@@ -63,7 +109,7 @@ public class PostService {
 			connection = getConnection();
 
 			PostDao postDao = new PostDao();
-			postDao.deletePost(connection, post);
+			postDao.delete(connection, post);
 
 			commit(connection);
 		} catch (RuntimeException e) {

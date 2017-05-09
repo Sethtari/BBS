@@ -36,29 +36,60 @@
 						<td><c:forEach items="${branches}" var="branch">
 								<c:if test="${branch.id == user.branchId}">
 									<c:out value="${branch.name}" />
-						</c:if>
-						</c:forEach>
-						</td>
+								</c:if>
+							</c:forEach></td>
 						<td><c:forEach items="${positions}" var="position">
 								<c:if test="${position.id == user.positionId}">
 									<c:out value="${position.name}" />
-						</c:if>
-						</c:forEach></td>
-						<td><form action="management" method="post">
+								</c:if>
+							</c:forEach></td>
+						<td>
 								<c:if test="${user.isStopped == '0'}">
-									<input type="hidden" name="isStopped" value="1" /><button type="submit" name="id" value="${user.id}">停止</button>
+								<script>
+									function submitStop() {
+										/* 確認ダイアログ表示 */
+										var flag = confirm("本当に停止しますか？\n\n停止したくない場合は[キャンセル]ボタンを押して下さい");
+										/* send_flg が TRUEなら送信、FALSEなら送信しない */
+										return flag;
+									}
+								</script><form action="management" method="post" onsubmit="return submitStop()">
+									<input type="hidden" name="isStopped" value="1" />
+									<button type="submit" name="id" value="${user.id}">停止</button></form>
 								</c:if>
 								<c:if test="${user.isStopped == '1'}">
-									<input type="hidden" name="isStopped" value="0" /><button type="submit" name="id" value="${user.id}">復活</button>
-								</c:if></form></td>
+								<script>
+									function submitReborn() {
+										/* 確認ダイアログ表示 */
+										var flag = confirm("本当に復活しますか？\n\n復活したくない場合は[キャンセル]ボタンを押して下さい");
+										/* send_flg が TRUEなら送信、FALSEなら送信しない */
+										return flag;
+									}
+								</script><form action="management" method="post" onsubmit="return submitReborn()">
+									<input type="hidden" name="isStopped" value="0" />
+									<button type="submit" name="id" value="${user.id}">復活</button></form>
+								</c:if>
+							</td>
 
 						<td><form action="settings" method="get">
 								<button type="submit" name="settingsButton" value="${user.id}">編集</button>
 							</form></td>
 
-						<td><c:if test="${user.id != loginUser.getId()}"><form action="deleteuser" method="get">
-								<input type="hidden" name="deleteId" value="${user.id}" /><button type="submit" name="deleteButton">削除</button>
-							</form></c:if></td>
+						<td><c:if test="${user.id != loginUser.getId()}">
+								<script>
+									function submitChk() {
+										/* 確認ダイアログ表示 */
+										var flag = confirm("本当に削除しますか？\n\n削除したくない場合は[キャンセル]ボタンを押して下さい");
+										/* send_flg が TRUEなら送信、FALSEなら送信しない */
+										return flag;
+									}
+								</script>
+
+								<form action="deleteuser" method="get"
+									onsubmit="return submitChk()">
+									<input type="hidden" name="deleteId" value="${user.id}" />
+									<button type="submit" name="deleteButton">削除</button>
+								</form>
+							</c:if></td>
 					</tr>
 				</c:forEach>
 			</table>

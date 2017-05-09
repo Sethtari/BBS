@@ -56,12 +56,99 @@ public class UserPostDao {
 		}
 	}
 
+	public List<UserPost> getCategories(Connection connection) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+
+
+			sql.append("SELECT ");
+			sql.append("posts.id,");
+			sql.append("users.id AS user_id, ");
+			sql.append("users.name,");
+			sql.append("users.branch_id,");
+			sql.append("users.position_id,");
+			sql.append("posts.title,");
+			sql.append("posts.text,");
+			sql.append("posts.category,");
+			sql.append("posts.created_at ");
+
+			sql.append("FROM ");
+			sql.append("posts ,");
+			sql.append(" users ");
+
+			sql.append("WHERE ");
+			sql.append(" posts.users_id ");
+			sql.append(" = ");
+			sql.append(" users.id ");
+
+			sql.append("GROUP BY ");
+			sql.append("posts.category");
+
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ResultSet rs = ps.executeQuery();
+			List<UserPost> ret = toUserPostList(rs);
+			return ret;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	public List<UserPost> categorize(Connection connection ,String category) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+
+			sql.append("SELECT ");
+			sql.append("posts.id, ");
+			sql.append("users.id AS user_id, ");
+			sql.append("users.name, ");
+			sql.append("users.branch_id, ");
+			sql.append("users.position_id, ");
+			sql.append("posts.title, ");
+			sql.append("posts.text, ");
+			sql.append("posts.category, ");
+			sql.append("posts.created_at ");
+
+			sql.append("FROM ");
+			sql.append("posts, users ");
+
+			sql.append("Where ");
+			sql.append("posts.users_id = users.id  and ");
+			sql.append("category = ? ");
+
+			sql.append("ORDER BY posts.created_at DESC");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setString(1, category);
+
+			ResultSet rs = ps.executeQuery();
+
+			List<UserPost> ret = toUserPostList(rs);
+
+			return ret;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+
 	private List<UserPost> toUserPostList(ResultSet rs)
 			throws SQLException {
 
 		List<UserPost> ret = new ArrayList<UserPost>();
 		try {
 			while (rs.next()) {
+
 
 				int postsId = rs.getInt("id");
 				int usersId = rs.getInt("user_id");
@@ -84,6 +171,8 @@ public class UserPostDao {
 				post.setPostsCategory(postsCategory);
 				post.setPostsCreatedAt(postsCreatedAt);
 				ret.add(post);
+
+
 			}
 			return ret;
 		} finally {

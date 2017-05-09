@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import jp.alhinc.kadono_setsu.bbs_system.beans.UserComment;
 import jp.alhinc.kadono_setsu.bbs_system.beans.UserPost;
@@ -21,13 +22,40 @@ public class HomeServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-
+		HttpSession session = request.getSession();
 
 		List<UserPost> userPosts = new PostService().getPostsList();
-		request.setAttribute("userPosts", userPosts);
+		session.setAttribute("userPosts", userPosts);
 
 		List<UserComment> userComments = new CommentService().getCommentsList();
-		request.setAttribute("userComments", userComments);
+		session.setAttribute("userComments", userComments);
+
+		List<UserPost> categories = new PostService().getCategories();
+		session.setAttribute("posts", categories);
+
+		request.getRequestDispatcher("home.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+
+		HttpSession session = request.getSession();
+
+		String category = request.getParameter("category");
+		System.out.println(category);
+		if(category.isEmpty() || category.equals("all")){
+			List<UserComment> userComments = new CommentService().getCommentsList();
+			session.setAttribute("userComments", userComments);
+		}else{
+			List<UserPost> posts = new PostService().getCategorizedList(category);
+			session.setAttribute("userPosts", posts);
+		}
+
+		List<UserPost> categories = new PostService().getCategories();
+		session.setAttribute("posts", categories);
+
+		List<UserComment> userComments = new CommentService().getCommentsList();
+		session.setAttribute("userComments", userComments);
 
 		request.getRequestDispatcher("home.jsp").forward(request, response);
 	}

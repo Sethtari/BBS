@@ -28,12 +28,12 @@ public class NewCommentServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		List<String> messages = new ArrayList<String>();
-
+		String id = request.getParameter("comenttedPostId");
 		if (isValid(request, messages) == true) {
 
 			User user = (User) session.getAttribute("loginUser");
 
-		String id = request.getParameter("comenttedPostId");
+
 		Comment comment = new Comment();
 		comment.setPostId(Integer.parseInt(id));
 		comment.setUserId(user.getId());
@@ -45,7 +45,8 @@ public class NewCommentServlet extends HttpServlet {
 		response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			session.setAttribute("texta", request.getParameter("text"));
+			session.setAttribute("missCommentId", id);
+			session.setAttribute("text", request.getParameter("text"));
 			response.sendRedirect("./");
 		}
 	}
