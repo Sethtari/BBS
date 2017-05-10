@@ -71,7 +71,7 @@
 							</td>
 
 						<td><form action="settings" method="get">
-								<button type="submit" name="settingsButton" value="${user.id}">編集</button>
+								<button type="submit" name="settings" value="${user.id}">編集</button>
 							</form></td>
 
 						<td><c:if test="${user.id != loginUser.getId()}">

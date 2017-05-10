@@ -36,18 +36,19 @@
 		</div>
 		<br />
 		<hr />
-		<br /> カテゴリーフィルター :
+		<br /> カテゴリー :
 		<form action="./" method="get">
 			<select name="category">
-				<option value="all"><c:out value="条件なし" />
+				<option value=""><c:out value="条件なし" />
 					<c:forEach items="${posts}" var="post">
 						<option value="${post.postsCategory}">
 							<c:out value="${post.postsCategory}" />
 					</c:forEach>
-			</select>
+			</select><br />
+			日付指定 :<input type="date" name="dateMin" value="${dateMin }"> ～ <input type="date" name="dateMax" value="${dateMax}">
 			<button type="submit" name="choiseCategory">絞り込む</button>
 		</form>
-		<br /> 日時指定 : 2017/4/1 ～ 2017/5/9<br />
+		<br />
 
 		<c:forEach items="${userPosts}" var="userPost">
 			<br />

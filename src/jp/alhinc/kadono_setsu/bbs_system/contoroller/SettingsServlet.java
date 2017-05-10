@@ -30,7 +30,15 @@ public class SettingsServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		User editUser = new UserService().getUser(Integer.parseInt(request.getParameter("settingsButton")));
+		List<String> messages = new ArrayList<String>();
+
+		User editUser = new UserService().getUser(Integer.parseInt(request.getParameter("settings")));
+
+		if(editUser.getName() == null || editUser.getName().isEmpty()){
+			messages.add("不正なアクセスです");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("management");
+		}
 		session.setAttribute("editUser", editUser);
 
 		List<Branch> branches = new BranchService().getBranchList();

@@ -56,11 +56,13 @@ public class FilterForbidden implements Filter {
 			// ログイン処理時はなにもしない
 
 		} else if (session == null || user == null) {
-
 			// セッションが切れたらログイン画面に戻る
-
+			List<String> messages = new ArrayList<String>();
+			messages.add("システムにはログインした後アクセスしてください");
+			session.setAttribute("errorMessages", messages);
 			((HttpServletResponse) response).sendRedirect("login");
 			return;
+
 		} else if ((uri.equals(contextPath + "/management") || uri.equals(contextPath + "/management.jsp") )&& !user.getPositionId().equals("1")){
 			// ユーザー管理画面への人事部アカウント以外のアクセス禁止
 			List<String> messages = new ArrayList<String>();

@@ -99,7 +99,7 @@ public class UserPostDao {
 		}
 	}
 
-	public List<UserPost> categorize(Connection connection ,String category) {
+	public List<UserPost> categorize(Connection connection ,String category,String postMin,String postMax) {
 
 		PreparedStatement ps = null;
 		try {
@@ -119,16 +119,27 @@ public class UserPostDao {
 			sql.append("FROM ");
 			sql.append("posts, users ");
 
-			sql.append("Where ");
-			sql.append("posts.users_id = users.id  and ");
-			sql.append("category = ? ");
+			sql.append("WHERE ");
+			sql.append("posts.users_id = users.id ");
+
+			sql.append(" AND posts.created_at BETWEEN ");
+			sql.append("? ");
+			sql.append(" AND ");
+			sql.append("? ");
+
+			if(!category.isEmpty()){
+				sql.append(" AND category = ? ");
+			}
 
 			sql.append("ORDER BY posts.created_at DESC");
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, category);
-
+			ps.setString(1, postMin);
+			ps.setString(2, postMax);
+			if(!category.isEmpty()){
+				ps.setString(3, category);
+			}
 			ResultSet rs = ps.executeQuery();
 
 			List<UserPost> ret = toUserPostList(rs);
@@ -140,7 +151,6 @@ public class UserPostDao {
 			close(ps);
 		}
 	}
-
 
 	private List<UserPost> toUserPostList(ResultSet rs)
 			throws SQLException {

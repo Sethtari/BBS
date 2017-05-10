@@ -1,6 +1,8 @@
 package jp.alhinc.kadono_setsu.bbs_system.contoroller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -26,14 +28,32 @@ public class HomeServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String category = request.getParameter("category");
-		System.out.println(category);
-		if(category == null || category.equals("all")){
+
+		Date date = new Date();
+		SimpleDateFormat date1 = new SimpleDateFormat("yyyy-MM-dd");
+		String choisedDate = date1.format(date); // format(d)のdは、Date d = new Date();のd
+
+		String dateMin = request.getParameter("dateMin");
+		if(dateMin == null || dateMin.isEmpty() ){
+			dateMin = "2000-01-01";
+		}
+
+		String dateMax = request.getParameter("dateMax");
+		if(dateMax == null || dateMax.isEmpty()){
+			dateMax = choisedDate;
+		}
+
+		if(category == null){
 			List<UserPost> userPosts = new PostService().getPostsList();
 			session.setAttribute("userPosts", userPosts);
 		}else{
-			List<UserPost> posts = new PostService().getCategorizedList(category);
+			List<UserPost> posts = new PostService().getCategorizedList(category,dateMin,dateMax);
 			session.setAttribute("userPosts", posts);
 		}
+
+		session.setAttribute("date", date);
+		session.setAttribute("dateMin", dateMin);
+		session.setAttribute("dateMax", dateMax);
 
 		List<UserPost> categories = new PostService().getCategories();
 		session.setAttribute("posts", categories);

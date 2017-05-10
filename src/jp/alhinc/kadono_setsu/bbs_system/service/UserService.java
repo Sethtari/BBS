@@ -68,7 +68,10 @@ public class UserService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-
+			String userIdCheck = Integer.toString(userId);
+			if(!userIdCheck.matches("^[0-9]*$")){
+				return;;
+			}
 			UserDao userDao = new UserDao();
 			User user = userDao.getUser(connection, userId);
 

@@ -78,8 +78,7 @@ public class PostService {
 		}
 	}
 
-
-	public List<UserPost> getCategorizedList(String category) {
+	public List<UserPost> getCategorizedList(String category,String postMin,String postMax) {
 
 		Connection connection = null;
 		try {
@@ -87,7 +86,7 @@ public class PostService {
 
 			UserPostDao postDao = new UserPostDao();
 
-			List<UserPost> ret = postDao.categorize(connection, category);
+			List<UserPost> ret = postDao.categorize(connection, category,postMin,postMax);
 
 			commit(connection);
 			return ret;
