@@ -22,30 +22,14 @@ public class HomeServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		HttpSession session = request.getSession();
-
-		List<UserPost> userPosts = new PostService().getPostsList();
-		session.setAttribute("userPosts", userPosts);
-
-		List<UserComment> userComments = new CommentService().getCommentsList();
-		session.setAttribute("userComments", userComments);
-
-		List<UserPost> categories = new PostService().getCategories();
-		session.setAttribute("posts", categories);
-
-		request.getRequestDispatcher("home.jsp").forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
 
 		String category = request.getParameter("category");
 		System.out.println(category);
-		if(category.isEmpty() || category.equals("all")){
-			List<UserComment> userComments = new CommentService().getCommentsList();
-			session.setAttribute("userComments", userComments);
+		if(category == null || category.equals("all")){
+			List<UserPost> userPosts = new PostService().getPostsList();
+			session.setAttribute("userPosts", userPosts);
 		}else{
 			List<UserPost> posts = new PostService().getCategorizedList(category);
 			session.setAttribute("userPosts", posts);

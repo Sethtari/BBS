@@ -140,6 +140,15 @@ public class SettingsServlet extends HttpServlet {
 		if (!(editUser.getPositionId().matches("^[0-9]+$"))){
 			messages.add("部署・役職の項目に数字以外が入力されています");
 		}
+
+		if ((editUser.getPositionId().matches("2") ||editUser.getPositionId().matches("1") )&& !editUser.getBranchId().matches("1")){
+			messages.add("支店と部署・役職の組み合わせが規定に沿っていません");
+		}
+
+		if ((editUser.getPositionId().matches("3") ||editUser.getPositionId().matches("4") )&& editUser.getBranchId().matches("1")){
+			messages.add("支店と部署・役職の組み合わせが規定に沿っていません");
+		}
+
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
 		if (messages.size() == 0) {
 			return true;

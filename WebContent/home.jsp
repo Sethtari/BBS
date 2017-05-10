@@ -28,8 +28,7 @@
 			</c:if>
 			<a href="logout">ログアウト</a>
 		</div>
-		<br />
-		<br />
+		<br /> <br />
 
 		<div align="center">
 			<c:out value="${loginUser.getName()}" />
@@ -38,13 +37,13 @@
 		<br />
 		<hr />
 		<br /> カテゴリーフィルター :
-		<form action="./" method="post">
+		<form action="./" method="get">
 			<select name="category">
-			<option value="all"><c:out value="条件なし" />
-				<c:forEach items="${posts}" var="post">
+				<option value="all"><c:out value="条件なし" />
+					<c:forEach items="${posts}" var="post">
 						<option value="${post.postsCategory}">
 							<c:out value="${post.postsCategory}" />
-				</c:forEach>
+					</c:forEach>
 			</select>
 			<button type="submit" name="choiseCategory">絞り込む</button>
 		</form>
