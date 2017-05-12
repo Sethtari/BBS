@@ -1,0 +1,110 @@
+body {
+	background-color: #FFFFFF;
+	color: #000000
+	margin: 0;
+	padding: 20px 0 50px 0;
+}
+
+.postTitle {
+	position: relative;
+	padding: .25em 0 .5em .75em;
+	border-left: 6px solid #3498db;
+}
+
+.postTitle:first-letter {
+	margin-right: .1em;
+	font-size: 1.5em;
+}
+
+.postTitle::after {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	content: '';
+	width: 70%;
+	height: 0;
+	border-bottom: 1px solid #ccc;
+}
+
+/* 投稿タイトル */
+.commentTitle {
+	position: relative;
+	padding-bottom: .5em;
+	border-bottom: 4px solid #ccc;
+	overflow: hidden;
+}
+
+.commentTitle::after {
+	position: absolute;
+	bottom: -4px;
+	left: 0;
+	z-index: 2;
+	content: '';
+	width: 20%;
+	height: 4px;
+	background-color: #3498db;
+	overflow: hidden;
+}
+
+/* コメントタイトル */
+.menuTitle {
+	padding: .5em .75em;
+	background-color: #ffffff;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+}
+
+/* カテゴリタイトル */
+
+.text {
+	padding: .5em .75em;
+	background-color: #efefef;
+	border-radius: 6px;
+}
+/* 投稿表示欄 */
+
+
+.element {
+	display: inline-block;
+	padding: .5em .75em;
+	background-color: #FFFFFF;
+	border-radius: 6px;
+	position: relative;
+	padding: .25em 0 .5em .75em;
+	border-bottom: 1px solid #ccc;
+	border-left: 6px solid #ccc;
+}
+/* 付加情報 */
+
+.underbar {
+	border-bottom: 1px solid #ccc;
+}
+/* アンダーバー */
+
+
+
+
+.bg {
+	display: inline-block;
+	position: relative;
+	padding: 1em 4em 1em 1em;
+	-webkit-background: linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, #f6f6f6 0%);
+	background: linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, #f6f6f6 0%);
+	border-radius: 6px;
+}
+.bg {
+	position: relative;
+	padding: 1em;
+	background-color: #f6f6f6;
+}
+.bg::after {
+	position: absolute;
+	top: 0;
+	right: 0;
+	content: '';
+	width: 0;
+	border-width: 0 16px 16px 0;
+	border-style: solid;
+	border-color: #fff #fff #ddd #ddd;
+	box-shadow: -1px 1px 2px rgba(0, 0, 0, .1);
+}
+/* 各投稿背景 */

@@ -15,6 +15,8 @@ public class UserPost implements Serializable {
 	private String postsText;
 	private String postsCategory;
 	private Date postsCreatedAt;
+	private Date firstPost;
+	private Date lastPost;
 
 
 	public int getPostsId() {
@@ -82,7 +84,6 @@ public class UserPost implements Serializable {
 		this.postsCategory = postsCategory;
 	}
 
-
 	public Date getPostsCreatedAt() {
 		return postsCreatedAt;
 	}
@@ -91,4 +92,22 @@ public class UserPost implements Serializable {
 		this.postsCreatedAt = postsCreatedAt;
 	}
 
+
+	public Date getFirstPost() {
+		return firstPost;
+	}
+
+	public void setFirstPost(Date firstPost) {
+		this.firstPost = firstPost;
+
+	}
+
+
+	public Date getLastPost() {
+		return lastPost;
+	}
+
+	public void setLastPost(Date lastPost) {
+		this.lastPost = lastPost;
+	}
 }

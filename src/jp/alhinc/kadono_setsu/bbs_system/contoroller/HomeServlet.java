@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import jp.alhinc.kadono_setsu.bbs_system.beans.UserComment;
 import jp.alhinc.kadono_setsu.bbs_system.beans.UserPost;
 import jp.alhinc.kadono_setsu.bbs_system.service.CommentService;
-import jp.alhinc.kadono_setsu.bbs_system.service.PostService;
+import jp.alhinc.kadono_setsu.bbs_system.service.UserPostService;
 
 @WebServlet(urlPatterns = { "/index.jsp" })
 public class HomeServlet extends HttpServlet {
@@ -25,42 +25,85 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+
 		HttpSession session = request.getSession();
 
-		String category = request.getParameter("category");
 
+		UserPost whenCreated = new UserPostService().getWhenCreated();
+		session.setAttribute("whenCreated", whenCreated);
+		//最初の投稿及び最後の投稿の日を取得
+
+		String category = request.getParameter("category");
 		Date date = new Date();
-		SimpleDateFormat date1 = new SimpleDateFormat("yyyy-MM-dd");
-		String choisedDate = date1.format(date); // format(d)のdは、Date d = new Date();のd
+		SimpleDateFormat formatType = new SimpleDateFormat("yyyy-MM-dd");
+		String choisedDate = formatType.format(date); // format(d)のdは、Date d = new Date();のd
+		String firstPost = formatType.format(whenCreated.getFirstPost());
+		//今日の日付の取得後、年月日の内容のみに
 
 		String dateMin = request.getParameter("dateMin");
-		if(dateMin == null || dateMin.isEmpty() ){
-			dateMin = "2000-01-01";
+		String dateMax = request.getParameter("dateMax");
+
+		//日付指定のminが未入力であれば格納
+		if(!isNumMatch(dateMin) || dateMin == null || dateMin.isEmpty() ){
+			dateMin = firstPost;
 		}
 
-		String dateMax = request.getParameter("dateMax");
-		if(dateMax == null || dateMax.isEmpty()){
+
+		//日付指定のmaxが未入力であれば格納
+		if(!isNumMatch(dateMax) || dateMax == null || dateMax.isEmpty()){
 			dateMax = choisedDate;
 		}
 
-		if(category == null){
-			List<UserPost> userPosts = new PostService().getPostsList();
-			session.setAttribute("userPosts", userPosts);
-		}else{
-			List<UserPost> posts = new PostService().getCategorizedList(category,dateMin,dateMax);
-			session.setAttribute("userPosts", posts);
+		List<UserPost> categoryList = new UserPostService().getCategories();
+		session.setAttribute("categoryList", categoryList);
+		//カテゴリ一覧の取得
+
+		if(request.getParameter("firstTimeAccess") == null || request.getParameter("firstTimeAccess").isEmpty()){
+			request.setAttribute("date", date);
+			session.setAttribute("category", category);
+			session.setAttribute("dateMin", dateMin);
+			session.setAttribute("dateMax", dateMax);
+
+			List<UserComment> userComments = new CommentService().getCommentsList();
+			request.setAttribute("userComments", userComments);
+
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+			return;
 		}
 
-		session.setAttribute("date", date);
+		if(category == null){
+			List<UserPost> userPosts = new UserPostService().getPostsList();
+			request.setAttribute("userPosts", userPosts);
+		}else{
+			if(dateMin == null || dateMin.isEmpty() ){
+				dateMin = firstPost;
+			}
+			dateMax += " 23:59:59";
+			List<UserPost> posts = new UserPostService().getCategorizedList(category,dateMin,dateMax);
+			request.setAttribute("userPosts", posts);
+			dateMax = dateMax.substring(0, 10);
+			System.out.println(dateMax);
+		}
+
+		request.setAttribute("date", date);
+		session.setAttribute("category", category);
 		session.setAttribute("dateMin", dateMin);
 		session.setAttribute("dateMax", dateMax);
 
-		List<UserPost> categories = new PostService().getCategories();
-		session.setAttribute("posts", categories);
-
 		List<UserComment> userComments = new CommentService().getCommentsList();
-		session.setAttribute("userComments", userComments);
+		request.setAttribute("userComments", userComments);
 
 		request.getRequestDispatcher("home.jsp").forward(request, response);
+		return;
+	}
+
+	static boolean isNumMatch(String number) {
+		if(number == "null" || number == null || number.isEmpty()){
+			return false;
+		}
+
+		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]{4}[-][0-9]{2}[-][0-9]{2}");
+		java.util.regex.Matcher matcher = pattern.matcher(number);
+		return matcher.matches();
 	}
 }

@@ -8,16 +8,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー管理画面</title>
-<%--<link href="./css/style.css" rel="stylesheet" type="text/css">--%>
+<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-	<div class="main-contents">
+<body><div  class="postTitle" align="left">ユーザー管理</div><br />
 
-		<div class="header">
-			<a href="./">ホーム画面へ</a> <a href="signup">ユーザーの新規登録画面へ</a>
+
+		<div class="menuTitle">
+			<a href="./">ホーム画面へ</a></div>
+			<div class="menuTitle"><a href="signup">ユーザーの新規登録画面へ</a>
 
 		</div>
-
+<br />		<c:if test="${ not empty errorMessages }">
+			<div class="errorMessages">
+				<ul>
+					<c:forEach items="${errorMessages}" var="message">
+						<li><c:out value="${message}" />
+					</c:forEach>
+				</ul>
+			</div>
+			<c:remove var="errorMessages" scope="session" />
+		</c:if>
 		<div class="userList">
 			<table border="2">
 				<tr>
@@ -43,7 +53,7 @@
 									<c:out value="${position.name}" />
 								</c:if>
 							</c:forEach></td>
-						<td>
+						<td><c:if test="${user.id != loginUser.getId()}">
 								<c:if test="${user.isStopped == '0'}">
 								<script>
 									function submitStop() {
@@ -68,7 +78,7 @@
 									<input type="hidden" name="isStopped" value="0" />
 									<button type="submit" name="id" value="${user.id}">復活</button></form>
 								</c:if>
-							</td>
+							</c:if></td>
 
 						<td><form action="settings" method="get">
 								<button type="submit" name="settings" value="${user.id}">編集</button>
@@ -84,7 +94,7 @@
 									}
 								</script>
 
-								<form action="deleteuser" method="get"
+								<form action="deleteuser" method="post"
 									onsubmit="return submitChk()">
 									<input type="hidden" name="deleteId" value="${user.id}" />
 									<button type="submit" name="deleteButton">削除</button>
@@ -94,6 +104,5 @@
 				</c:forEach>
 			</table>
 		</div>
-	</div>
 </body>
 </html>

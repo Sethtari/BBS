@@ -9,7 +9,7 @@
 	<title>ログイン画面</title>
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body><div  class="postTitle" align="left">ログイン</div><br /><br />
 <div class="main-contents">
 
 <c:if test="${ not empty errorMessages }">
@@ -22,6 +22,7 @@
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
+
 
 <form action="login" method="post"><br />
 	<label for="login_id">ログインID</label>

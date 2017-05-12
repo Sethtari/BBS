@@ -10,9 +10,10 @@
 <title>新規投稿画面</title>
 <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-	<div class="main-contents">
+<body><div  class="postTitle" align="left">新規投稿</div><br />
 
+
+		<div class="menuTitle"><a href="./">戻る</a></div><br />
 		<c:if test="${ not empty errorMessages }">
 			<div class="errorMessages">
 				<ul>
@@ -23,8 +24,6 @@
 			</div>
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
-
-		<div class="form-area">
 
 			<form action="newpost" method="post">
 				件名（50文字以内で入力してください）
@@ -38,9 +37,5 @@
 				<input name="category" value="${category}"><c:remove var="category" scope="session" />
 				<br /> <input type="hidden" name="loginId" value="${loginUser.getName()}" /><input type="submit" value="新規投稿">
 			</form>
-
-		</div>
-
-	</div>
 </body>
 </html>

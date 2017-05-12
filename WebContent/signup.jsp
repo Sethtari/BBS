@@ -9,8 +9,8 @@
 <title>ユーザー登録</title>
 <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-	<div class="main-contents">
+<body><div  class="postTitle" align="left">新規登録</div><br />
+<div  class="menuTitle"><a href="./management">戻る</a></div>
 		<c:if test="${ not empty errorMessages }">
 			<div class="errorMessages">
 				<ul>
@@ -21,6 +21,8 @@
 			</div>
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
+
+
 		<form action="signup" method="post">
 			<br /> <label for="login_id">ログインID</label> <input name="login_id"
 				value="${login_id}" id="login_id" />（半角英数字で6文字以上20文字以内で入力してください）<br /> <label
@@ -52,8 +54,7 @@
 			</select><br />
 
 			<input	type="submit" value="登録" /> <br /><br />
-			<a href="./management">戻る</a>
+
 		</form>
-	</div>
 </body>
 </html>

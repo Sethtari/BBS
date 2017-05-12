@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 			messages.add("ログインに失敗しました。");
 			session.setAttribute("errorMessages", messages);
 			session.setAttribute("login_id",request.getParameter("login_id"));
-			response.sendRedirect("./");
+			response.sendRedirect("login");
 		}
 	}
 

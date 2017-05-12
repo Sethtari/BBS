@@ -31,13 +31,23 @@ public class SettingsServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		List<String> messages = new ArrayList<String>();
+		String id = (request.getParameter("settings"));
 
-		User editUser = new UserService().getUser(Integer.parseInt(request.getParameter("settings")));
-
-		if(editUser.getName() == null || editUser.getName().isEmpty()){
+		if(id == null || id.isEmpty()){
 			messages.add("不正なアクセスです");
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("management");
+			return;
+		}
+
+		if(request.getParameter("settings").isEmpty() || isNumMatch(id)){
+		User editUser = new UserService().getUser(Integer.parseInt(id));
+
+		if(editUser == null){
+			messages.add("不正なアクセスです");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("management");
+			return;
 		}
 		session.setAttribute("editUser", editUser);
 
@@ -48,10 +58,20 @@ public class SettingsServlet extends HttpServlet {
 		session.setAttribute("positions", positions);
 
 		request.getRequestDispatcher("settings.jsp").forward(request, response);
+		}else{
+			messages.add("不正なアクセスです");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("management");
+			return;
+		}
 	}
 
+	static boolean isNumMatch(String number) {
 
-
+		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^([1-9]?[0-9]|2147483648)");
+		java.util.regex.Matcher matcher = pattern.matcher(number);
+		return matcher.matches();
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest request,
@@ -81,6 +101,7 @@ public class SettingsServlet extends HttpServlet {
 			response.sendRedirect("management");
 		} else {
 			session.setAttribute("errorMessages", messages);
+			session.setAttribute("settings", request.getParameter("settings"));
 			request.getRequestDispatcher("settings.jsp").forward(request, response);
 		}
 	}

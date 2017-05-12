@@ -152,6 +152,44 @@ public class UserPostDao {
 		}
 	}
 
+	public UserPost getWhenCreated(Connection connection) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+
+			sql.append("SELECT ");
+			sql.append("max(posts.created_at) AS lastPost, ");
+			sql.append("min(posts.created_at) AS firstPost ");
+
+			sql.append("FROM ");
+			sql.append("posts,users ");
+
+			sql.append("Where ");
+			sql.append("posts.users_id = users.id ");
+			sql.append("AND posts.created_at =(select max(posts.created_at)) ");
+			sql.append("AND posts.created_at =(select min(posts.created_at)) ");
+
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ResultSet rs = ps.executeQuery();
+			List<UserPost> ret = toPostSpanList(rs);
+			if (ret.isEmpty() == true) {
+				return null;
+			} else if (2 == ret.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return ret.get(0);
+			}
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+
 	private List<UserPost> toUserPostList(ResultSet rs)
 			throws SQLException {
 
@@ -180,6 +218,7 @@ public class UserPostDao {
 				post.setPostsText(postsText);
 				post.setPostsCategory(postsCategory);
 				post.setPostsCreatedAt(postsCreatedAt);
+
 				ret.add(post);
 
 
@@ -190,4 +229,28 @@ public class UserPostDao {
 		}
 	}
 
+	private List<UserPost> toPostSpanList(ResultSet rs)
+			throws SQLException {
+
+		List<UserPost> ret = new ArrayList<UserPost>();
+		try {
+			while (rs.next()) {
+
+				Timestamp firstPost = rs.getTimestamp("firstPost");
+				Timestamp lastPost = rs.getTimestamp("lastPost");
+
+				UserPost post = new UserPost();
+
+				post.setFirstPost(firstPost);
+				post.setLastPost(lastPost);
+
+				ret.add(post);
+
+
+			}
+			return ret;
+		} finally {
+			close(rs);
+		}
+	}
 }
