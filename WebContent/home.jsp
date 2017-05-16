@@ -30,8 +30,8 @@
 			</div>
 			<c:remove var="errorMessages" scope="session" />
 		</c:if><div class="bg">
- <form action="./" method="get">
-			カテゴリー : <select name="category">
+<form action="./" method="get"><table><tr><td>
+			カテゴリー</td><td>:<select name="category">
 				<option value="">
 					<c:forEach items="${categoryList}" var="categories">
 					<c:if test="${categories.postsCategory.equals(category)}">
@@ -41,10 +41,10 @@
 					<option value="${categories.postsCategory}" /></c:if>
 					<c:out value="${categories.postsCategory}" />
 					</c:forEach>
-			</select><br /><br />
-			日付指定 :<input type="date" name="dateMin" value="${dateMin }"> ～
-			<input type="date" name="dateMax" value="${dateMax }"><br /><br />
-			<button type="submit">絞り込む</button></form>
+			</select></td></tr>
+			<tr><td>日付指定</td><td>:<input type="date" name="dateMin" value="${dateMin }"> ～
+			<input type="date" name="dateMax" value="${dateMax }"></td></tr><tr><td>
+			<button type="submit">絞り込む</button></td></tr></table></form>
 		</div><hr />
 
 

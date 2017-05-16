@@ -24,13 +24,12 @@
 </c:if>
 
 <div class="bg">
-<form action="login" method="post"><br />
-	<label for="loginId">ログインID</label>
-	<input name="loginId" value="${loginId}" id="loginId"/><br />
-
-	<label for="password">パスワード</label>
-	<input name="password" type="password" id="password"/> <br /><br />
-
+<form action="login" method="post">
+<table><tr><td>
+	ログインID</td><td><input name="loginId" value="${loginId}" id="loginId"/></td></tr>
+	<tr><td>
+	パスワード</td><td><input name="password" type="password" id="password"/></td></tr></table>
+	<br />
 	<button type="submit">ログイン</button> <br />
 </form>
 </div></div>

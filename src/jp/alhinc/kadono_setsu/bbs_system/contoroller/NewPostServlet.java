@@ -44,7 +44,7 @@ public class NewPostServlet extends HttpServlet {
 			post.setUsersId(user.getId());
 			post.setTitle(request.getParameter("title"));
 			post.setText(request.getParameter("text"));
-			post.setCategory(request.getParameter("category"));
+			post.setCategory(request.getParameter("categoryP"));
 
 
 			new PostService().register(post);
@@ -57,7 +57,7 @@ public class NewPostServlet extends HttpServlet {
 			session.setAttribute("errorMessages", messages);
 			session.setAttribute("title",request.getParameter("title"));
 			session.setAttribute("text", request.getParameter("text"));
-			session.setAttribute("category", request.getParameter("category"));
+			session.setAttribute("categoryP", request.getParameter("categoryP"));
 			request.getRequestDispatcher("newPost.jsp").forward(request, response);
 		}
 	}
@@ -66,7 +66,7 @@ public class NewPostServlet extends HttpServlet {
 
 		String titleCheck = request.getParameter("title");
 		String textCheck = request.getParameter("text");
-		String categoryCheck = request.getParameter("category");
+		String categoryCheck = request.getParameter("categoryP");
 
 
 		if (StringUtils.isEmpty(titleCheck) == true){

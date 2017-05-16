@@ -34,7 +34,7 @@
 
 			<c:remove var="text" scope="session" />
 				カテゴリー<br />（10文字以内）</td><td>
-				<input name="category" value="${category}"><c:remove var="category" scope="session" />
+				<input name="categoryP" value="${categoryP}"><c:remove var="categoryP" scope="session" />
 				<input type="hidden" name="loginId" value="${loginUser.getName()}" />
 				</td></tr></table>
 				<br /><button type="submit">新規投稿</button>

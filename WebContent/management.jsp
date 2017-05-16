@@ -29,7 +29,7 @@
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
 		<div class="bg">
-			<table border="1" bordercolor="#cccccc" bgcolor="#FFFFFF">
+			<table border="1" bordercolor="#fdf5e6" bgcolor="#FFFFFF">
 				<tr align="center">
 					<td><div class="postTitle">ID</div></td>
 					<td>ログインID</td>
