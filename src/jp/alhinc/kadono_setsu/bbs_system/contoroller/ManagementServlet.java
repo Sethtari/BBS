@@ -1,7 +1,6 @@
 package jp.alhinc.kadono_setsu.bbs_system.contoroller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.List;
 
@@ -42,13 +41,18 @@ public class ManagementServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		HttpSession session = request.getSession();
-		List<String> messages = new ArrayList<String>();
+
 
 		User user = new User();
 		int id = Integer.parseInt(request.getParameter("id"));
-		String name = request.getParameter("name");
+
 		int isStopped = Integer.parseInt(request.getParameter("isStopped"));
+
+/*
+		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
+		String name = request.getParameter("name");
+
 		String change = null;
 
 		if(isStopped ==1){
@@ -56,6 +60,7 @@ public class ManagementServlet extends HttpServlet {
 		} else {
 			change = "復活";
 		}
+*/
 
 		if(isStopped == 1){
 			user.setId(id);
@@ -68,10 +73,10 @@ public class ManagementServlet extends HttpServlet {
 		}
 
 		new UserService().changeStoppedOrNot(user);
-
+/*
 		messages.add(name+"さんを"+change+"しました");
 		session.setAttribute("errorMessages", messages);
-
+*/
 		response.sendRedirect("management");
 	}
 }

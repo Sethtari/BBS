@@ -26,8 +26,7 @@
 		<form action="signup" method="post"><table border="1" bordercolor="cccccc" bgcolor="#FFFFFF"><tr><td>
 			ログインID<br />(6字以上20字以内の半角英数)</td><td><input name="newId"
 				value="${newId}" id="newId" /></td></tr>
-				<tr><td>パスワード<br />(6字以上255字以内の半角英数)</td><td><input name="password" type="password"
-				id="password" /></td></tr>
+				<tr><td>パスワード<br />(6字以上255字以内の半角英数)</td><td><input name="password" type="password" id="password" /></td></tr>
 				<tr><td>パスワード再確認<br />（確認のため再度パスワードを入力)</td><td>
 			<input name="passwordCheck" type="password" id="passwordCheck" /></td></tr>
 				<tr><td>名称<br />（10文字以内）</td><td><input name="newName" value="${newName}"

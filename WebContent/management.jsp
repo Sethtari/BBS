@@ -40,7 +40,7 @@
 				</tr>
 				<c:forEach items="${users}" var="user">
 					<tr align="center">
-						<td><div class="management">・<c:out value="${user.id}" /></div></td>
+						<td><div class="management"><c:out value="${user.id}" /></div></td>
 						<td><c:out value="${user.loginId}" /></td>
 						<td><c:out value="${user.name}" /></td>
 						<td><c:forEach items="${branches}" var="branch">
@@ -58,7 +58,7 @@
 								<script>
 									function submitStop() {
 										/* 確認ダイアログ表示 */
-										var flag = confirm("本当に停止しますか？\n\n停止したくない場合は[キャンセル]ボタンを押して下さい");
+										var flag = confirm("本当に停止しますか？\n\n停止を取り消す場合は[キャンセル]ボタンを押して下さい");
 										/* send_flg が TRUEなら送信、FALSEなら送信しない */
 										return flag;
 									}
@@ -70,7 +70,7 @@
 								<script>
 									function submitReborn() {
 										/* 確認ダイアログ表示 */
-										var flag = confirm("本当に復活しますか？\n\n復活したくない場合は[キャンセル]ボタンを押して下さい");
+										var flag = confirm("本当に復活しますか？\n\n復活を取り消す場合は[キャンセル]ボタンを押して下さい");
 										/* send_flg が TRUEなら送信、FALSEなら送信しない */
 										return flag;
 									}
@@ -88,7 +88,7 @@
 								<script>
 									function submitChk() {
 										/* 確認ダイアログ表示 */
-										var flag = confirm("本当に削除しますか？\n\n削除したくない場合は[キャンセル]ボタンを押して下さい");
+										var flag = confirm("本当に削除しますか？\n\n削除を取り消す場合は[キャンセル]ボタンを押して下さい");
 										/* send_flg が TRUEなら送信、FALSEなら送信しない */
 										return flag;
 									}

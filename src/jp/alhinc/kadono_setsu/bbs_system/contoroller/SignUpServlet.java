@@ -56,10 +56,10 @@ public class SignUpServlet extends HttpServlet {
 			user.setName(request.getParameter("newName"));
 			user.setBranchId(request.getParameter("branchId"));
 			user.setPositionId(request.getParameter("positionId"));
-
+/*
 			messages.add(request.getParameter("newName")+"さんをデータベースに登録しました");
 			session.setAttribute("errorMessages", messages);
-
+*/
 			new UserService().register(user);
 
 			response.sendRedirect("./management");
@@ -93,12 +93,11 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("そのログインIDはすでに使われています");
 		}
 
-
 		if (StringUtils.isEmpty(newId) == true || StringUtils.isEmpty(password) == true || StringUtils.isEmpty(newName) == true || StringUtils.isEmpty(branchId) == true || StringUtils.isEmpty(positionId) == true) {
 			messages.add("空白の項目があります。全項目を入力してください");
 		}
 
-		if( loginIdLen != loginIdBytes.length || !newId.matches("^[0-9a-zA-Z]{6,20}$")){
+		if((!(newId == "") || !StringUtils.isBlank(newId)  || !(newId == null) || !newId.isEmpty()) && (loginIdLen != loginIdBytes.length || !newId.matches("^[0-9a-zA-Z]{6,20}$")) ){
 			messages.add("ログインIDは6字以上20字以内の半角英数のみで入力してください");
 		}
 
@@ -126,7 +125,6 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("支店と部署・役職の組み合わせが規定に沿っていません");
 		}
 
-		// TODO アカウントが既に利用されていないかの確認も必要
 		if (messages.size() == 0) {
 			return true;
 		} else {

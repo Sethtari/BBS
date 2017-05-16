@@ -28,7 +28,7 @@
 <form action="newpost" method="post"><table border="0"><tr><td>
 
 				件名<br />（50文字以内）</td><td>
-				<input name="title" value="${title}"><c:remove var="title" scope="session" /></td></tr><tr><td>
+				<input name="title" value="${title}" width="200px"><c:remove var="title" scope="session" /></td></tr><tr><td>
 				本文<br />（1000文字以内）</td><td>
 <textarea name="text" cols="100" rows="10"><c:out value="${text}" /></textarea></td></tr><tr><td>
 

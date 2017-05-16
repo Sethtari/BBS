@@ -68,7 +68,7 @@ public class SettingsServlet extends HttpServlet {
 
 	static boolean isNumMatch(String number) {
 
-		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^([1-9]?[0-9]|2147483648)");
+		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^([1-9]?[0-9]|2147483647)");
 		java.util.regex.Matcher matcher = pattern.matcher(number);
 		return matcher.matches();
 	}
@@ -97,8 +97,10 @@ public class SettingsServlet extends HttpServlet {
 			}
 
 			session.removeAttribute("editUser");
-			messages.add(editUser.getName()+"さんの編集が正常に終了しました");
-			session.setAttribute("errorMessages", messages);
+/*
+ 			messages.add(editUser.getName()+"さんの編集が正常に終了しました");
+ 			session.setAttribute("errorMessages", messages);
+*/
 			response.sendRedirect("management");
 		} else {
 			session.setAttribute("errorMessages", messages);

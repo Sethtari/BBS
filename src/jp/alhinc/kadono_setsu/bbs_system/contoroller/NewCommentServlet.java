@@ -50,10 +50,10 @@ public class NewCommentServlet extends HttpServlet {
 			comment.setText(request.getParameter("text"));
 
 			new CommentService().register(comment);
-
+/*
 			messages.add("投稿にコメントしました");
 			session.setAttribute("errorMessages", messages);
-
+*/
 			response.sendRedirect("./");
 			return;
 

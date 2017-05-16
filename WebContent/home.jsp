@@ -73,7 +73,7 @@
 <script>
 									function submitChk() {
 										/* 確認ダイアログ表示 */
-										var flag = confirm("本当に削除しますか？\n\n削除したくない場合は[キャンセル]ボタンを押して下さい");
+										var flag = confirm("本当に削除しますか？\n\n削除を取り消す場合は[キャンセル]ボタンを押して下さい");
 										/* send_flg が TRUEなら送信、FALSEなら送信しない */
 										return flag;
 									}
@@ -90,7 +90,7 @@
 <script>
 									function submitChk() {
 										/* 確認ダイアログ表示 */
-										var flag = confirm("本当に削除しますか？\n\n削除したくない場合は[キャンセル]ボタンを押して下さい");
+										var flag = confirm("本当に削除しますか？\n\n削除を取り消す場合は[キャンセル]ボタンを押して下さい");
 										/* send_flg が TRUEなら送信、FALSEなら送信しない */
 										return flag;
 									}
@@ -122,7 +122,7 @@
 <script>
 									function submitChk() {
 										/* 確認ダイアログ表示 */
-										var flag = confirm("本当に削除しますか？\n\n削除したくない場合は[キャンセル]ボタンを押して下さい");
+										var flag = confirm("本当に削除しますか？\n\n削除を取り消す場合は[キャンセル]ボタンを押して下さい");
 										/* send_flg が TRUEなら送信、FALSEなら送信しない */
 										return flag;
 								</script>

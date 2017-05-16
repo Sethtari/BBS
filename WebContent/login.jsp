@@ -10,7 +10,7 @@
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body><div class="bodies"><div  class="postTitle" align="left">ログイン</div><br /><br />
-<div class="main-contents">
+
 
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
@@ -23,15 +23,15 @@
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
 
-
+<div class="bg">
 <form action="login" method="post"><br />
 	<label for="loginId">ログインID</label>
 	<input name="loginId" value="${loginId}" id="loginId"/><br />
 
 	<label for="password">パスワード</label>
-	<input name="password" type="password" id="password"/> <br />
+	<input name="password" type="password" id="password"/> <br /><br />
 
-	<input type="submit" value="ログイン" /> <br />
+	<button type="submit">ログイン</button> <br />
 </form>
 </div></div>
 </body>
