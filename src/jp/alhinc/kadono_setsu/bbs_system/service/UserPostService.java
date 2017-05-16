@@ -88,6 +88,7 @@ public class UserPostService {
 			UserPost ret = postDao.getWhenCreated(connection);
 
 			commit(connection);
+
 			return ret;
 		} catch (RuntimeException e) {
 			rollback(connection);

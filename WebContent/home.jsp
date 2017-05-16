@@ -19,7 +19,7 @@
 			</c:if>
 			<div class="menuTitle"><a href="logout" class="categoryTitle">ログアウト</a></div>
 					<br />
-					<b><c:out value="${loginUser.getName()}" />さんとしてログインしています。</b><br />
+					　　<b><c:out value="${loginUser.getName()}" />さんとしてログインしています。</b><br />
 		<c:if test="${ not empty errorMessages }">
 			<div class="errorMessages">
 				<ul>

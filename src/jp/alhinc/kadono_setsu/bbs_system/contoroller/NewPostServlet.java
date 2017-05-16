@@ -48,7 +48,7 @@ public class NewPostServlet extends HttpServlet {
 
 
 			new PostService().register(post);
-			messages.add("投稿は正常に終了しました");
+			messages.add("投稿しました");
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("./");
 		} else {

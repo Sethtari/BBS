@@ -63,7 +63,7 @@
 										return flag;
 									}
 								</script><form action="management" method="post" onsubmit="return submitStop()">
-									<input type="hidden" name="isStopped" value="1" />
+									<input type="hidden" name="isStopped" value="1" /><input type="hidden" name="name" value="${user.name }" />
 									<button type="submit" name="id" value="${user.id}">停止</button></form>
 								</c:if>
 								<c:if test="${user.isStopped == '1'}">
@@ -75,7 +75,7 @@
 										return flag;
 									}
 								</script><form action="management" method="post" onsubmit="return submitReborn()">
-									<input type="hidden" name="isStopped" value="0" />
+									<input type="hidden" name="isStopped" value="0" /><input type="hidden" name="name" value="${user.name }" />
 									<button type="submit" name="id" value="${user.id}">復活</button></form>
 								</c:if>
 							</c:if></td>
@@ -97,6 +97,7 @@
 								<form action="deleteuser" method="post"
 									onsubmit="return submitChk()">
 									<input type="hidden" name="deleteId" value="${user.id}" />
+									<input type="hidden" name="name" value="${user.name }" />
 									<button type="submit" name="deleteButton">削除</button>
 								</form>
 							</c:if></td>

@@ -32,6 +32,9 @@ public class DeleteCommentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
+
 		int id = Integer.parseInt(request.getParameter("deleteCommentId"));
 
 
@@ -39,6 +42,9 @@ public class DeleteCommentServlet extends HttpServlet {
 		comment.setId(id);
 
 		new CommentService().delete(comment);
+
+		messages.add("コメントを削除しました");
+		session.setAttribute("errorMessages", messages);
 
 		response.sendRedirect("./");
 

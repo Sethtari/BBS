@@ -29,12 +29,28 @@ public class HomeServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
+
+		String category = request.getParameter("category");
+
+		Date date = new Date();
+		SimpleDateFormat formatType = new SimpleDateFormat("yyyy-MM-dd");
+		String choisedDate = formatType.format(date); // format(d)のdは、Date d = new Date();のd
+
+
 		UserPostService userPost = new UserPostService();
-		if(userPost.getWhenCreated() == null){
+		UserPost postSpan = new UserPost();
+		postSpan = userPost.getWhenCreated();
+
+		if((postSpan.getFirstPost() == null)){
+
 			List<String> messages = new ArrayList<String>();
+			session.setAttribute("category", category);
+			session.setAttribute("dateMin", null);
+			session.setAttribute("dateMax", null);
 			messages.add("まだ投稿がありません");
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("./");
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+			return;
 		}
 		UserPost whenCreated = new UserPostService().getWhenCreated();
 		session.setAttribute("whenCreated", whenCreated);
@@ -42,10 +58,9 @@ public class HomeServlet extends HttpServlet {
 
 
 
-		String category = request.getParameter("category");
-		Date date = new Date();
-		SimpleDateFormat formatType = new SimpleDateFormat("yyyy-MM-dd");
-		String choisedDate = formatType.format(date); // format(d)のdは、Date d = new Date();のd
+
+
+
 		String firstPost = formatType.format(whenCreated.getFirstPost());
 		//今日の日付の取得後、年月日の内容のみに
 

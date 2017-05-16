@@ -57,6 +57,9 @@ public class SignUpServlet extends HttpServlet {
 			user.setBranchId(request.getParameter("branchId"));
 			user.setPositionId(request.getParameter("positionId"));
 
+			messages.add(request.getParameter("newName")+"さんをデータベースに登録しました");
+			session.setAttribute("errorMessages", messages);
+
 			new UserService().register(user);
 
 			response.sendRedirect("./management");

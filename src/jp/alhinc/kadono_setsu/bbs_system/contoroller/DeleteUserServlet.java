@@ -32,11 +32,17 @@ public class DeleteUserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
 		String id = request.getParameter("deleteId");
 		User user = new User();
+		String deletedUser = request.getParameter("name");
+
 		user.setId(Integer.parseInt(id));
 		new UserService().deleteUser(user);
 
+		messages.add(deletedUser+"さんをデータベースから削除しました");
+		session.setAttribute("errorMessages", messages);
 		response.sendRedirect("management");
 		return;
 	}

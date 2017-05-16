@@ -68,7 +68,7 @@
 				</c:forEach>
 			</select></td></tr>
 			</c:if></table>
-			<br /> <input type="submit" value="登録" /> <br />
+			<br /> <button type="submit">編集する</button> <br />
 		</form></div>
 </div></body>
 </html>

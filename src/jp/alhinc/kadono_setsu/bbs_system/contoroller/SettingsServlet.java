@@ -97,7 +97,8 @@ public class SettingsServlet extends HttpServlet {
 			}
 
 			session.removeAttribute("editUser");
-
+			messages.add(editUser.getName()+"さんの編集が正常に終了しました");
+			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("management");
 		} else {
 			session.setAttribute("errorMessages", messages);

@@ -177,7 +177,10 @@ public class UserPostDao {
 			List<UserPost> ret = toPostSpanList(rs);
 			if (ret.isEmpty() == true) {
 				return null;
-			} else if (2 == ret.size()) {
+			} else if (0 == ret.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+
+			}else if (2 == ret.size()) {
 				throw new IllegalStateException("2 <= userList.size()");
 			} else {
 				return ret.get(0);

@@ -32,12 +32,17 @@ public class DeletePostServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
 		int id = Integer.parseInt(request.getParameter("deletePostId"));
 
 		Post post = new Post();
 		post.setId(id);
 
 		new PostService().deletePost(post);
+
+		messages.add("投稿を削除しました");
+		session.setAttribute("errorMessages", messages);
 
 		response.sendRedirect("./");
 		return;
