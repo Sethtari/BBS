@@ -33,20 +33,13 @@ public class DeleteCommentServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		int id = Integer.parseInt(request.getParameter("deleteCommentId"));
-		HttpSession session = request.getSession();
+
 
 		Comment comment = new Comment();
 		comment.setId(id);
 
 		new CommentService().delete(comment);
 
-
-		String dateMin = request.getParameter("dateMin");
-		String dateMax = request.getParameter("dateMax");
-		String category = request.getParameter("category");
-		session.setAttribute("dateMin", dateMin);
-		session.setAttribute("dateMax", dateMax);
-		session.setAttribute("category", category);
 		response.sendRedirect("./");
 
 		return;

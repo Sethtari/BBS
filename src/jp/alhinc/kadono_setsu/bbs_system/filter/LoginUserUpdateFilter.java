@@ -43,14 +43,16 @@ public class LoginUserUpdateFilter implements Filter {
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("loginUser");
 		UserService userService = new UserService();
+		String uri = req.getRequestURI();
 
-		if(!(user == null)){
-			User updateUser= userService.getUser(user.getId());
+		if(!uri.matches(".*css.*") && !(user == null)){
+			User updateUser = userService.getUser(user.getId());
 
 			if(updateUser == null){
 				session.removeAttribute("user");
-			}else{
+			} else {
 				session.setAttribute("loginUser", updateUser);
+
 			}
 		}
 

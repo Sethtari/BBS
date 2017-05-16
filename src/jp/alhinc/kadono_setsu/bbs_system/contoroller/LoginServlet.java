@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		String loginId = request.getParameter("login_id");
+		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
 
 		LoginService loginService = new LoginService();
@@ -38,14 +38,16 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (user != null) {
 
+
 			session.setAttribute("loginUser", user);
+
 			response.sendRedirect("./");
 		} else {
 
 			List<String> messages = new ArrayList<String>();
-			messages.add("ログインに失敗しました。");
+			messages.add("ログインに失敗しました");
 			session.setAttribute("errorMessages", messages);
-			session.setAttribute("login_id",request.getParameter("login_id"));
+			session.setAttribute("loginId",request.getParameter("loginId"));
 			response.sendRedirect("login");
 		}
 	}

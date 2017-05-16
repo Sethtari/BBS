@@ -9,7 +9,7 @@
 	<title>ログイン画面</title>
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body><div  class="postTitle" align="left">ログイン</div><br /><br />
+<body><div class="bodies"><div  class="postTitle" align="left">ログイン</div><br /><br />
 <div class="main-contents">
 
 <c:if test="${ not empty errorMessages }">
@@ -25,14 +25,14 @@
 
 
 <form action="login" method="post"><br />
-	<label for="login_id">ログインID</label>
-	<input name="login_id" value="${login_id}" id="login_id"/><br />
+	<label for="loginId">ログインID</label>
+	<input name="loginId" value="${loginId}" id="loginId"/><br />
 
 	<label for="password">パスワード</label>
 	<input name="password" type="password" id="password"/> <br />
 
 	<input type="submit" value="ログイン" /> <br />
 </form>
-</div>
+</div></div>
 </body>
 </html>

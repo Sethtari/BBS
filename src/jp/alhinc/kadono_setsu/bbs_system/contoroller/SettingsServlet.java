@@ -112,8 +112,8 @@ public class SettingsServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User editUser = (User) session.getAttribute("editUser");
 
-		if(!StringUtils.isEmpty(request.getParameter("login_id"))){
-			editUser.setLoginID(request.getParameter("login_id"));
+		if(!StringUtils.isEmpty(request.getParameter("loginId"))){
+			editUser.setLoginID(request.getParameter("loginId"));
 		}
 
 		if(!StringUtils.isEmpty(request.getParameter("password"))){
@@ -124,12 +124,12 @@ public class SettingsServlet extends HttpServlet {
 			editUser.setName(request.getParameter("name"));
 		}
 
-		if(!StringUtils.isEmpty(request.getParameter("branch_id"))){
-			editUser.setBranchId(request.getParameter("branch_id"));
+		if(!StringUtils.isEmpty(request.getParameter("branchId"))){
+			editUser.setBranchId(request.getParameter("branchId"));
 		}
 
-		if(!StringUtils.isEmpty(request.getParameter("position_id"))){
-			editUser.setPositionId(request.getParameter("position_id"));
+		if(!StringUtils.isEmpty(request.getParameter("positionId"))){
+			editUser.setPositionId(request.getParameter("positionId"));
 		}
 
 		if(StringUtils.isEmpty(request.getParameter("password"))){
@@ -145,16 +145,34 @@ public class SettingsServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User editUser = (User) session.getAttribute("editUser");
+		UserService check = new UserService();
+		String loginId = editUser.getLoginId();
+		String password = editUser.getPassword();
+		int loginIdLen = loginId.length();
+		int passwordLen = password.length();
+		byte[] loginIdBytes = loginId.getBytes();
+		byte[] passwordBytes = password.getBytes();
 
-
-		if (!(6 <= editUser.getLoginId().length()) || !(editUser.getLoginId().length() <= 20)){
-			messages.add("ログイン_idの文字数が規定と異なります");
+		if (!check.userIdCheck(editUser.getId(),editUser.getLoginId())){
+			messages.add("そのログインIDはすでに使われています");
 		}
 
-		if (!(6 <= editUser.getPassword().length()) || !(editUser.getPassword().length() <= 255)){
+		if (loginIdLen > 20 || loginIdLen < 6){
+			messages.add("ログインIDの文字数が規定と異なります");
+		}
+
+		if (loginIdLen != loginIdBytes.length){
+			messages.add("ログインIDは半角英数のみで入力してください");
+		}
+
+		if (passwordLen != 0 && (passwordLen > 255 || passwordLen < 6)){
 			messages.add("パスワードの文字数が規定と異なります");
 		}
-		if (!StringUtils.isEmpty(request.getParameter("password")) && !editUser.getPassword().equals(request.getParameter("passwordCheck"))){
+
+		if (passwordLen != passwordBytes.length){
+			messages.add("パスワードは半角英数のみで入力してください");
+		}
+		if (!StringUtils.isEmpty(request.getParameter("password")) && !password.equals(request.getParameter("passwordCheck"))){
 			messages.add("入力されたパスワードが一致しません");
 		}
 
@@ -162,13 +180,6 @@ public class SettingsServlet extends HttpServlet {
 			messages.add("ユーザー名称の文字数が規定と異なります");
 		}
 
-		if (!(editUser.getBranchId().matches("^[0-9]+$"))){
-			messages.add("支店の項目に数字以外が入力されています");
-		}
-
-		if (!(editUser.getPositionId().matches("^[0-9]+$"))){
-			messages.add("部署・役職の項目に数字以外が入力されています");
-		}
 
 		if ((editUser.getPositionId().matches("2") ||editUser.getPositionId().matches("1") )&& !editUser.getBranchId().matches("1")){
 			messages.add("支店と部署・役職の組み合わせが規定に沿っていません");

@@ -33,19 +33,12 @@ public class DeletePostServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		int id = Integer.parseInt(request.getParameter("deletePostId"));
-		HttpSession session = request.getSession();
 
 		Post post = new Post();
 		post.setId(id);
 
 		new PostService().deletePost(post);
 
-		String dateMin = request.getParameter("dateMin");
-		String dateMax = request.getParameter("dateMax");
-		String category = request.getParameter("category");
-		session.setAttribute("dateMin", dateMin);
-		session.setAttribute("dateMax", dateMax);
-		session.setAttribute("category", category);
 		response.sendRedirect("./");
 		return;
 	}

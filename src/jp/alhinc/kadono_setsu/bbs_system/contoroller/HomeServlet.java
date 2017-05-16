@@ -2,6 +2,7 @@ package jp.alhinc.kadono_setsu.bbs_system.contoroller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,10 +29,18 @@ public class HomeServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-
+		UserPostService userPost = new UserPostService();
+		if(userPost.getWhenCreated() == null){
+			List<String> messages = new ArrayList<String>();
+			messages.add("まだ投稿がありません");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("./");
+		}
 		UserPost whenCreated = new UserPostService().getWhenCreated();
 		session.setAttribute("whenCreated", whenCreated);
 		//最初の投稿及び最後の投稿の日を取得
+
+
 
 		String category = request.getParameter("category");
 		Date date = new Date();
@@ -58,18 +67,6 @@ public class HomeServlet extends HttpServlet {
 		session.setAttribute("categoryList", categoryList);
 		//カテゴリ一覧の取得
 
-		if(request.getParameter("firstTimeAccess") == null || request.getParameter("firstTimeAccess").isEmpty()){
-			request.setAttribute("date", date);
-			session.setAttribute("category", category);
-			session.setAttribute("dateMin", dateMin);
-			session.setAttribute("dateMax", dateMax);
-
-			List<UserComment> userComments = new CommentService().getCommentsList();
-			request.setAttribute("userComments", userComments);
-
-			request.getRequestDispatcher("home.jsp").forward(request, response);
-			return;
-		}
 
 		if(category == null){
 			List<UserPost> userPosts = new UserPostService().getPostsList();
@@ -82,7 +79,6 @@ public class HomeServlet extends HttpServlet {
 			List<UserPost> posts = new UserPostService().getCategorizedList(category,dateMin,dateMax);
 			request.setAttribute("userPosts", posts);
 			dateMax = dateMax.substring(0, 10);
-			System.out.println(dateMax);
 		}
 
 		request.setAttribute("date", date);

@@ -9,7 +9,7 @@
 <title>${editUser.loginId}の設定</title>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body><div class="postTitle" align="left">編集</div><br />
+<body><div class="bodies"><div class="postTitle" align="left">編集</div><br />
 
 	<div  class="menuTitle"><a href="management">戻る</a></div><br />
 		<c:if test="${ not empty errorMessages }">
@@ -22,26 +22,22 @@
 			</div>
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
-
+<div class="bg">
 		<form action="settings" method="post">
-			<br /> <label for="login_id">ログインID</label>
-			<input name="login_id" value="${editUser.loginId}" ID="login_id" />
-			<br />
+		<table border="1" bordercolor="#cccccc" bgcolor="#FFFFFF"><tr><td>
+			ログインID<br />
+			(6字以上20字以内の半角英数)</td><td><input name="loginId" value="${editUser.loginId}" ID="loginId" /></td></tr>
+			<tr><td>パスワード<br />
+			(6字以上255字以内の半角英数)</td><td><input name="password" type="password" /></td></tr>
+			<tr><td>パスワード再確認<br />
+			(確認のため再度パスワードを入力)</td><td>
+			<input name="passwordCheck" type="password" id="passwordCheck" /></td></tr>
 
-			<label for="password">パスワード</label>
-			<input name="password" type="password" />
-			<br />
-			<label for="passwordCheck">パスワード再確認</label>（誤入力防止にもう一度同じパスワードを入力してください）
-			<input name="passwordCheck" type="password" id="passwordCheck" /><br />
-
-			<label for="name">名称</label> <input name="name"
-				value="${editUser.name}" ID="name" />
-				<br />
-
+			<tr><td>名称<br/>
+			(10字以内)</td><td><input name="name" value="${editUser.name}" ID="name" /></td></tr>
 
 			<c:if test="${editUser.id != loginUser.getId()}">
-				<label for="branch_id">支店</label>
-			<select name="branch_id">
+			<tr><td>支店</td><td><select name="branchId">
 				<c:forEach items="${branches}" var="branch">
 					<c:if test="${branch.id == editUser.branchId }">
 						<option value="${branch.id}" selected>
@@ -54,12 +50,10 @@
 						</option>
 					</c:if>
 				</c:forEach>
-			</select>
-			<br />
+			</select></td></tr>
 
 
-			<label for="position_id">部署・役職</label>
-			<select name="position_id">
+			<tr><td>部署・役職</td><td><select name="positionId">
 				<c:forEach items="${positions}" var="position">
 					<c:if test="${position.id == editUser.positionId }">
 						<option value="${position.id}" selected>
@@ -72,7 +66,9 @@
 						</option>
 					</c:if>
 				</c:forEach>
-			</select></c:if><br /> <input type="submit" value="登録" /> <br />
-		</form>
-</body>
+			</select></td></tr>
+			</c:if></table>
+			<br /> <input type="submit" value="登録" /> <br />
+		</form></div>
+</div></body>
 </html>

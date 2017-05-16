@@ -24,13 +24,13 @@ public class NewCommentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-			HttpSession session = request.getSession();
-			List<String> messages = new ArrayList<String>();
-			messages.add("不正なアクセスです");
-			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("./");
-			return;
-		}
+		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
+		messages.add("不正なアクセスです");
+		session.setAttribute("errorMessages", messages);
+		response.sendRedirect("./");
+		return;
+	}
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
@@ -44,20 +44,24 @@ public class NewCommentServlet extends HttpServlet {
 			User user = (User) session.getAttribute("loginUser");
 
 
-		Comment comment = new Comment();
-		comment.setPostId(Integer.parseInt(id));
-		comment.setUserId(user.getId());
-		comment.setText(request.getParameter("text"));
+			Comment comment = new Comment();
+			comment.setPostId(Integer.parseInt(id));
+			comment.setUserId(user.getId());
+			comment.setText(request.getParameter("text"));
+
+			new CommentService().register(comment);
 
 
-		new CommentService().register(comment);
+			response.sendRedirect("./");
+			return;
 
-		response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
 			session.setAttribute("missCommentId", id);
 			session.setAttribute("text", request.getParameter("text"));
+
 			response.sendRedirect("./");
+			return;
 		}
 	}
 
@@ -69,10 +73,9 @@ public class NewCommentServlet extends HttpServlet {
 
 
 
-		if (StringUtils.isEmpty(textCheck) == true) {
+		if (StringUtils.isBlank(textCheck)) {
 			messages.add("本文を入力してください");
-		}
-		if (textCheck.length() > 500){
+		}else if (textCheck.length() > 500){
 			messages.add("コメント文が規定を"+(textCheck.length()-500)+"字オーバーしています");
 			messages.add("コメントは500文字以内で入力してください");
 		}

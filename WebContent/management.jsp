@@ -10,7 +10,7 @@
 <title>ユーザー管理画面</title>
 <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body><div  class="postTitle" align="left">ユーザー管理</div><br />
+<body><div class="bodies"><div  class="postTitle" align="left">ユーザー管理</div><br />
 
 
 		<div class="menuTitle">
@@ -28,10 +28,10 @@
 			</div>
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
-		<div class="userList">
-			<table border="2">
-				<tr>
-					<td>ID</td>
+		<div class="bg">
+			<table border="1" bordercolor="#cccccc" bgcolor="#FFFFFF">
+				<tr align="center">
+					<td><div class="postTitle">ID</div></td>
 					<td>ログインID</td>
 					<td>名称</td>
 					<td>支店</td>
@@ -39,8 +39,8 @@
 					<td colspan="3">ユーザー</td>
 				</tr>
 				<c:forEach items="${users}" var="user">
-					<tr>
-						<td><c:out value="${user.id}" /></td>
+					<tr align="center">
+						<td><div class="management">・<c:out value="${user.id}" /></div></td>
 						<td><c:out value="${user.loginId}" /></td>
 						<td><c:out value="${user.name}" /></td>
 						<td><c:forEach items="${branches}" var="branch">
@@ -104,5 +104,5 @@
 				</c:forEach>
 			</table>
 		</div>
-</body>
+</div></body>
 </html>

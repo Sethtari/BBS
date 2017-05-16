@@ -1,14 +1,19 @@
 body {
 	background-color: #FFFFFF;
-	color: #000000
-	margin: 0;
+	color: #7f7f7f
 	padding: 20px 0 50px 0;
 }
 
+.bodies{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
 .postTitle {
-	position: relative;
 	padding: .25em 0 .5em .75em;
+	left: 15px;
 	border-left: 6px solid #3498db;
+	word-break: break-all;
 }
 
 .postTitle:first-letter {
@@ -17,8 +22,7 @@ body {
 }
 
 .postTitle::after {
-	position: absolute;
-	left: 0;
+	left: 15px;
 	bottom: 0;
 	content: '';
 	width: 70%;
@@ -27,30 +31,25 @@ body {
 }
 
 /* 投稿タイトル */
-.commentTitle {
-	position: relative;
-	padding-bottom: .5em;
-	border-bottom: 4px solid #ccc;
-	overflow: hidden;
+
+
+/* 投稿囲い */
+
+.post {
+	padding: .25em 0 .5em .75em;
+	border-left: 6px solid #ececec;
+	border-bottom: 1px solid #ececec;
 }
 
-.commentTitle::after {
-	position: absolute;
-	bottom: -4px;
-	left: 0;
-	z-index: 2;
-	content: '';
-	width: 20%;
-	height: 4px;
-	background-color: #3498db;
-	overflow: hidden;
-}
+/* 投稿囲い */
 
-/* コメントタイトル */
+
 .menuTitle {
 	padding: .5em .75em;
 	background-color: #ffffff;
+	width: 20%;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+	word-break: break-all;
 }
 
 /* カテゴリタイトル */
@@ -68,7 +67,7 @@ body {
 	padding: .5em .75em;
 	background-color: #FFFFFF;
 	border-radius: 6px;
-	position: relative;
+	width: 100%;
 	padding: .25em 0 .5em .75em;
 	border-bottom: 1px solid #ccc;
 	border-left: 6px solid #ccc;
@@ -82,29 +81,93 @@ body {
 
 
 
+/* 管理画面用 */
+.management {
+	padding: .25em 0 .5em .75em;
+	margin-right: .1em;
+	font-size: 1.5em;
+	color: #3498db
+}
+
+.management::after {
+	left: 0;
+	bottom: 0;
+	content: '';
+	width: 70%;
+	height: 0;
+	border-bottom: 1px solid #ccc;
+}
+/* 管理画面用 */
+
+
+/* メニュータイトル */
+h1::after {
+	position: absolute;
+	top: .5em;
+	left: .5em;
+	content: '';
+	width: 6px;
+	height: -webkit-calc(100% - 1em);
+	height: calc(100% - 1em);
+	background-color: #3498db;
+	border-radius: 4px;
+}
+/* メニュータイトル */
+
 
 .bg {
 	display: inline-block;
-	position: relative;
+	position:relative;
+	left: 20px;
 	padding: 1em 4em 1em 1em;
-	-webkit-background: linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, #f6f6f6 0%);
-	background: linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, #f6f6f6 0%);
+	background: linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, #fdf5e6 0%);
 	border-radius: 6px;
+	word-break: break-all;
 }
-.bg {
-	position: relative;
-	padding: 1em;
-	background-color: #f6f6f6;
-}
-.bg::after {
-	position: absolute;
-	top: 0;
-	right: 0;
-	content: '';
-	width: 0;
-	border-width: 0 16px 16px 0;
-	border-style: solid;
-	border-color: #fff #fff #ddd #ddd;
-	box-shadow: -1px 1px 2px rgba(0, 0, 0, .1);
+/* 各背景 */
+
+
+.postBg {
+	display: inline-block;
+	position:relative;
+	left: 20px;
+	width: 70%;
+	padding: 1em 4em 1em 1em;
+	background: linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, #fdf5e6 0%);
+	border-radius: 6px;
+	word-break: break-all;
 }
 /* 各投稿背景 */
+
+
+.comment {
+	display: inline-block;
+	position:relative;
+	width:70%;
+	margin-left: 100px;
+	right: 20px;
+	padding: 1em 4em 1em 1em;
+	background: linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, #eeeeee 0%);
+	border-radius: 6px;
+	word-break: break-all;
+}
+
+/* コメント背景 */
+
+
+/* ボタン */
+button{
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #f7f7f7;
+    border-left: solid 6px #3498db;/*左線*/
+    color: #000000;/*文字色*/
+    font-weight: bold;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.20);
+}
+button:active {
+    box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
+    transform: translateY(2px);
+}
+/* ボタン */

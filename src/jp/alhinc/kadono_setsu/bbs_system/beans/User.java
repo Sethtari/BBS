@@ -80,3 +80,4 @@ public class User implements Serializable {
 		this.passCheck = passCheck;
 	}
 }
+

@@ -29,11 +29,13 @@ public class SignUpServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		HttpSession session = request.getSession();
+
 		List<Branch> branches = new BranchService().getBranchList();
-		request.setAttribute("branches", branches);
+		session.setAttribute("branches", branches);
 
 		List<Position> positions = new PositionService().getPositionList();
-		request.setAttribute("positions", positions);
+		session.setAttribute("positions", positions);
 		request.getRequestDispatcher("signup.jsp").forward(request, response);
 	}
 
@@ -49,51 +51,76 @@ public class SignUpServlet extends HttpServlet {
 		if (isValid(request, messages) == true) {	//63行目、アカウントとパスワードが記入されていれば実行
 			//書き込み作業
 			User user = new User();
-			user.setLoginID(request.getParameter("login_id"));
+			user.setLoginID(request.getParameter("newId"));
 			user.setPassword(request.getParameter("password"));
-			user.setName(request.getParameter("name"));
-			user.setBranchId(request.getParameter("branch_id"));
-			user.setPositionId(request.getParameter("position_id"));
+			user.setName(request.getParameter("newName"));
+			user.setBranchId(request.getParameter("branchId"));
+			user.setPositionId(request.getParameter("positionId"));
 
 			new UserService().register(user);
 
 			response.sendRedirect("./management");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			session.setAttribute("login_id",request.getParameter("login_id"));
-			session.setAttribute("name",request.getParameter("name"));
-			session.setAttribute("branch_id",request.getParameter("branch_id"));
-			session.setAttribute("position_id",request.getParameter("positions_id"));
+			session.setAttribute("newId",request.getParameter("newId"));
+			session.setAttribute("newName",request.getParameter("newName"));
+			session.setAttribute("branchId",request.getParameter("branchId"));
+			session.setAttribute("positionId",request.getParameter("positionId"));
 			request.getRequestDispatcher("signup.jsp").forward(request, response);
 		}
 	}
 
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String login_id = request.getParameter("login_id");
-		String password = request.getParameter("password");
-		String password_check = request.getParameter("password_check");
-		String name =request.getParameter("name");
-		String branch_id = request.getParameter("branch_id");
-		String position_id = request.getParameter("position_id");
 
-		if (StringUtils.isEmpty(login_id) == true || StringUtils.isEmpty(password) == true || StringUtils.isEmpty(name) == true || StringUtils.isEmpty(branch_id) == true || StringUtils.isEmpty(position_id) == true) {
+		UserService check = new UserService();
+		String newId = request.getParameter("newId");
+		String password = request.getParameter("password");
+		String passwordCheck = request.getParameter("passwordCheck");
+		String newName =request.getParameter("newName");
+		String branchId = request.getParameter("branchId");
+		String positionId = request.getParameter("positionId");
+		int loginIdLen = newId.length();
+		int passwordLen = password.length();
+		byte[] loginIdBytes = newId.getBytes();
+		byte[] passwordBytes = password.getBytes();
+
+
+		if (!check.newUserIdCheck(newId)){
+			messages.add("そのログインIDはすでに使われています");
+		}
+
+
+		if (StringUtils.isEmpty(newId) == true || StringUtils.isEmpty(password) == true || StringUtils.isEmpty(newName) == true || StringUtils.isEmpty(branchId) == true || StringUtils.isEmpty(positionId) == true) {
 			messages.add("空白の項目があります。全項目を入力してください");
 		}
 
-		if (!(6 <= login_id.length()) || !(login_id.length() <= 20)){
-			messages.add("ログイン_idの文字数が規定と異なります");
+		if( loginIdLen != loginIdBytes.length || !newId.matches("^[0-9a-zA-Z]{6,20}$")){
+			messages.add("ログインIDは6字以上20字以内の半角英数のみで入力してください");
 		}
 
-		if (!(6 <= password.length()) || !(password.length() <= 255)){
-			messages.add("パスワードの文字数が規定と異なります");
+		if(passwordLen < 6 || passwordLen >255){
+			messages.add("入力されたパスワードの文字数が規定と異なります");
 		}
-		if (!password.equals(password_check)){
+
+		if (passwordLen != passwordBytes.length){
+			messages.add("パスワードは半角英数のみで入力してください");
+		}
+		if (!password.equals(passwordCheck)){
 			messages.add("入力されたパスワードが一致しません");
 		}
 
-		if (!(name.length() <= 10)){
+		if (!(newName.length() <= 10)){
 			messages.add("ユーザー名称の文字数が規定と異なります");
+		}
+
+
+		if ((positionId.matches("2") ||positionId.matches("1")) && !branchId.matches("1")){
+			messages.add("支店と部署・役職の組み合わせが規定に沿っていません");
+		}
+
+		if ((positionId.matches("3") || positionId.matches("4")) && branchId.matches("1")){
+			messages.add("支店と部署・役職の組み合わせが規定に沿っていません");
 		}
 
 		// TODO アカウントが既に利用されていないかの確認も必要

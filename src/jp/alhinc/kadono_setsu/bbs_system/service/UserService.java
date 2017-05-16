@@ -131,6 +131,63 @@ public class UserService {
 		}
 	}
 
+	public boolean userIdCheck(int id,String login_id) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			User user = userDao.userCheck(connection,login_id);
+
+			commit(connection);
+
+			if(user == null){
+			return true;
+			} else if(user.getId() == id){
+				return true;
+			} else {
+				return false;
+			}
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
+	public boolean newUserIdCheck(String login_id) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			User user = userDao.userCheck(connection,login_id);
+
+			commit(connection);
+
+			if(user == null){
+			return true;
+			}
+			return false;
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
 	public void deleteUser(User user) {
 
 		Connection connection = null;
